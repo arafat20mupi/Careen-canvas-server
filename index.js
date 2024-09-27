@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const UserRoute=require('./User/UserRoute')
 const connectDB=require("./Config/dbConfig")
  
 require("dotenv").config();
@@ -10,6 +11,9 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("hello Developer");
 });
+
+// user route
+app.use("/api/users",UserRoute )
 // Server listening
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
