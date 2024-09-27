@@ -9,5 +9,14 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.6.4",
     "nodemailer": "^6.9.15"
-  }
+  },
+  "name": "careen-canvas-server",
+  "version": "1.0.0",
+  "description": "\"# Careen-canvas-server\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
 }
