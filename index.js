@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
+const connectDB=require("./Config/dbConfig")
+ 
 require("dotenv").config();
+connectDB()
 // Middleware
 app.use(express.json());
 //  Home route
