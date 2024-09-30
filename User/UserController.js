@@ -4,6 +4,7 @@ const admin = require("firebase-admin")
 //    register
 exports.register = async (req, res) => {
 
+  const { name, email, password } = req.body;
   try {
     // Firebase এ নতুন ব্যবহারকারী তৈরি করা হচ্ছে
     const firebaseUser = await admin.auth().createUser({
