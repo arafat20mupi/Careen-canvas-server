@@ -1,7 +1,7 @@
 const User = require("./UserSchema");
 //    register
 exports.register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, } = req.body;
   //   console.log(req.body);
   if (!email && !password)
     return res.status(400).json({ message: "email or password not  valid" });
@@ -10,9 +10,11 @@ exports.register = async (req, res) => {
       name: name,
       email: email,
       password: password,
+      
+
     });
     await user.save();
-    //  console.log(user);
+     console.log(user);
 
     res.send("user is registered");
   } catch (error) {
