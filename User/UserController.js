@@ -3,12 +3,6 @@ const admin = require("firebase-admin")
 
 //    register
 exports.register = async (req, res) => {
-  const { name, email, password } = req.body;
-  console.log(req.body);
-
-  if (!email || !password) {
-    return res.status(400).json({ message: "Email or password not valid" });
-  }
 
   try {
     // Firebase এ নতুন ব্যবহারকারী তৈরি করা হচ্ছে
@@ -26,7 +20,6 @@ exports.register = async (req, res) => {
     });
     await user.save();
     console.log(user);
-
     res.send("User is registered");
   } catch (error) {
     res.status(400).json({ error: error.message });
