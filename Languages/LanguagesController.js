@@ -3,7 +3,7 @@ const LanguagesSchema = require("./Languageschema");
 exports.createLanguage = async (req, res) => {
   try {
     const { userId, templateId, languages } = req.body;
-
+console.log(req.body);
     // Validate that languages are provided
     if (!languages || !Array.isArray(languages) || languages.length === 0) {
       return res

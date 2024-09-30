@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors');
 const UserRoute=require('./User/UserRoute')
 const educationRoute=require('./Education/EducationRoute')
+const LanguageRoute=require("./Languages/LanguageRoute")
 const connectDB=require("./Config/dbConfig")
  
 require("dotenv").config();
@@ -19,6 +20,8 @@ app.get("/", (req, res) => {
 app.use("/api/users",UserRoute )
 // education
 app.use("/api/education",educationRoute )
+// language
+app.use("/api/language",LanguageRoute )
 // Server listening
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
