@@ -3,8 +3,8 @@ const Title = require("./TitleSchema");
 // Create a new title entry
 exports.createTitle = async (req, res) => {
   try {
-    const { userId, templateId, summary } = req.body;
-    const newTitle = new Title({ userId, templateId, summary });
+    const { userId, templateId, title } = req.body;
+    const newTitle = new Title({ userId, templateId, title });
     await newTitle.save();
     res.status(201).json({ message: 'Title created successfully', title: newTitle });
   } catch (error) {

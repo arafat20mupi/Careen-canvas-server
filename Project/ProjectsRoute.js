@@ -5,11 +5,11 @@ const {
   getProjectById,
   updateProject,
   deleteProject
-} = require('./ProjectsController');
+} = require('./ProjectsController'); // Adjust the path
 
 const router = express.Router();
 
-// Create a project
+// Create a new project
 router.post('/projects', createProject);
 
 // Get all projects
