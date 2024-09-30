@@ -5,6 +5,7 @@ const EducationSchema = require("./EducationSchema");
 exports.CreateEducation = async (req, res) => {
   try {
     const { userId, templateId, education } = req.body;
+    console.log(req.body);
     const newEducation = new EducationSchema({
       userId,
       templateId,
@@ -33,7 +34,9 @@ exports.getEducations = async (req, res) => {
 
  exports.updateEducation =async(req,res,)=>{
      const {id}= req.params
+     console.log(id);
      const { education}=req.body
+     console.log(education);
  try {
     const update= new EducationSchema.findByIdAndUpdate(id,
         {education},
@@ -55,7 +58,7 @@ exports.getEducations = async (req, res) => {
       const { id } = req.params;
   
       // Find the education record by id and delete it
-      const deletedEducation = await Education.findByIdAndDelete(id);
+      const deletedEducation = await EducationSchema.findByIdAndDelete(id);
   
       if (!deletedEducation) {
         return res.status(404).json({ message: "Education record not found" });

@@ -5,8 +5,10 @@ const router = express.Router();
 //      post route
  router.post("/CreateEducation", CreateEducation)
 //     get route
- router.get("getEducations", getEducations)
+ router.get("/getEducations", getEducations)
 //  update route
-router.patch("/updateEducation",updateEducation)
+router.put("/updateEducation/:id",updateEducation)
 //  delete route
-router. delete("/deleteEducation",deleteEducation)
+router. delete("/deleteEducation/:id",deleteEducation)
+
+ module.exports=router
