@@ -16,6 +16,7 @@ app.get("/", (req, res) => {
 
 // user route
 app.use("/api/users",UserRoute )
+
 // Server listening
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
