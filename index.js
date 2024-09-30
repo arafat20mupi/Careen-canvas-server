@@ -3,6 +3,14 @@ const app = express();
 const cors = require('cors');
 const UserRoute=require('./User/UserRoute')
 const educationRoute=require('./Education/EducationRoute')
+const AwardRoute=require('./Awards/AwardsRoute')
+const CareerObjectiveRoute=require('./CareerObjective/CareerObjectiveRoute')
+const ContactRoute=require('./Contact/ContactRoute')
+const NameRoute=require('./Name/NameRoute')
+const ProjectsRoute=require('./Project/ProjectsRoute')
+const SkillRoute=require('./Skills/skillsRoute')
+const SummaryRoute=require('./Summary/SummaryRoute')
+const TitleRoute=require('./Title/TitleRoute')
 const connectDB=require("./Config/dbConfig")
  
 require("dotenv").config();
@@ -17,12 +25,26 @@ app.get("/", (req, res) => {
 
 // user route
 app.use("/api/users",UserRoute )
-<<<<<<< HEAD
-
-=======
 // education
 app.use("/api/education",educationRoute )
->>>>>>> daf4fdcff2487591e3cf62a857819aba468594c5
+// Awards 
+app.use("/api/awards", AwardRoute )
+// Career Objective
+app.use("/api/careersObjective",CareerObjectiveRoute);
+// Contacts
+app.use("/api/contact", ContactRoute );
+// Name
+app.use("/api/name", NameRoute);
+// Projects 
+app.use("/api/projects", ProjectsRoute);
+// skills
+app.use("/api/skills", SkillRoute);
+// Summary
+app.use("/api/summary", SummaryRoute);
+// title
+app.use("/api/title", TitleRoute);
+
+
 // Server listening
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

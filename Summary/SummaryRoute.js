@@ -5,7 +5,7 @@ const {
   getSummaryById,
   updateSummary,
   deleteSummary
-} = require('./SummaryController'); // Adjust the path as necessary
+} = require('./SummaryController');
 
 const router = express.Router();
 
