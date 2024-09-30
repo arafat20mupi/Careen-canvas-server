@@ -9,11 +9,12 @@ const EducationSchema = new mongoose.Schema({
         type: String,
        
       },
-  degree: {
-    type: String,
-  },
-  year: {
-    type: Number,
-  },
+      education: [
+        {
+          degree: { type:String},
+          institution:{ type:String} ,
+          duration: { type:String} 
+        }
+      ]
 });
-module.exports = ("EducationSchema", EducationSchema);
+module.exports = mongoose.model ("EducationSchema", EducationSchema);

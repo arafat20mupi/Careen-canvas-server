@@ -10,14 +10,13 @@ const ExperienceSchema = new mongoose.Schema({
        
       },
 
-    JobTitle : {
-    type: String,
-  },
-  companyName:{
-    type: String,
-  },
-  duration: {
-    type: Number,
-  },
+      experience: [
+        {
+          jobTitle: { type: String },
+          company: { type: String },
+          duration: { type: String },
+          responsibilities: [{ type: String }] 
+        }
+      ]
 });
-module.exports = ("EducationSchema", ExperienceSchema);
+module.exports = mongoose.model("ExperienceSchema", ExperienceSchema);
