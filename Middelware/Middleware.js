@@ -23,23 +23,23 @@ admin.initializeApp({
 });
 // console.log(serviceAccount);
 
-// Middleware to authenticate user using Firebase token
 const authMiddleware = async (req, res, next) => {
-    const token = req.headers.authorization?.split('Bearer ')[1];
-    console.log(token);
-  
-    if (!token) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
-  
-    try {
-      const decodedToken = await admin.auth().verifyIdToken(token);
-      req.user = { uid: decodedToken.uid };
-      console.log(req.user);
-      next();
-    } catch (error) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
-  };
+  const token = req.headers.authorization?.split('Bearer ')[1];
+
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized - No token provided' });
+  }
+
+  try {
+    const decodedToken = await admin.auth().verifyIdToken(token);
+    req.user = { uid: decodedToken.uid };
+    next();
+  } catch (error) {
+    console.error('Token verification failed:', error);
+    return res.status(401).json({ message: 'Unauthorized - Token verification failed' });
+  }
+};
+
+
   
   module.exports = authMiddleware;

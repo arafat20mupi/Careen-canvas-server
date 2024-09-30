@@ -1,28 +1,32 @@
 const User = require("./UserSchema");
+const admin = require("firebase-admin")
+
 //    register
 exports.register = async (req, res) => {
-  const { name, email, password, } = req.body;
-  //   console.log(req.body);
-  if (!email && !password)
-    return res.status(400).json({ message: "email or password not  valid" });
+
   try {
+    // Firebase এ নতুন ব্যবহারকারী তৈরি করা হচ্ছে
+    const firebaseUser = await admin.auth().createUser({
+      email: email,
+      password: password,
+    });
+    console.log(firebaseUser)
+    // Firebase UID পেয়ে নতুন ব্যবহারকারী MongoDB তে সেভ করা হচ্ছে
     const user = new User({
       name: name,
       email: email,
       password: password,
-      
-
+      firebaseUid: firebaseUser.uid,
     });
     await user.save();
-     console.log(user);
-
-    res.send("user is registered");
+    console.log(user);
+    res.send("User is registered");
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-//  login
+
 exports.login = async (req, res) => {
   const { email, password } = req.body;
   try {
