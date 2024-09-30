@@ -1,10 +1,7 @@
 const mongoose = require('mongoose');
 
-const projectSchema = new mongoose.Schema({
-  title: {
-    type: String,
-  },
-  description: {
+const nameSchema = new mongoose.Schema({
+  name: {
     type: String,
   },
   userId: {
@@ -13,9 +10,9 @@ const projectSchema = new mongoose.Schema({
   },
   templateId: {
     type: String,
-  }
+  },
 }, { timestamps: true });
 
-const Projects = mongoose.model('Projects', projectSchema);
+const Name = mongoose.model('Name', nameSchema);
 
-module.exports = Projects;
+module.exports = Name;
