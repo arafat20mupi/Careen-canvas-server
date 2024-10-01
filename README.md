@@ -201,4 +201,32 @@ put('/api/awards/:id')
 delete('/api/awards/:id')
 
 ```
+### language
+
+## api
+
+```
+/      post route
+post("/createLanguage")
+//     get route
+get("/getLanguagesByUserId ")
+//  update route
+patch("/updateLanguages/:id ")
+//  delete route
+delete("/deleteLanguages/:id")
+```
+### Experience
+## api
+/      post route
+post("/createExperience")
+//     get route
+get("/getExperience")
+//  update route
+patch("/updateExperienceById/:id ")
+//  delete route
+delete("/deleteExperienceById/:id")
+
+```
+
+
 

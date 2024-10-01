@@ -20,29 +20,33 @@ exports.createExperience = async (req, res) => {
   };
 
   // Get experience by user ID
-exports.getExperienceByUserId  = async (req, res) => {
+  exports.getExperience = async (req, res) => {
     try {
-      const { userId } = req.params;
-      const experience = await Experience.findOne({ userId });
+      // Retrieve all experience records
+      const experience = await ExperienceSchema.find();
   
-      if (!experience) {
-        return res.status(404).json({ message: 'Experience not found for this user.' });
+      // Check if experience data exists
+      if (!experience || experience.length === 0) {
+        return res.status(404).json({ message: 'No experience records found.' });
       }
   
+      // Respond with the experience data
       res.status(200).json(experience);
     } catch (error) {
+      // Handle any errors
       res.status(400).json({ error: error.message });
     }
   };
+  
   // Update experience by user ID
-exports.updateExperienceByUserId = async (req, res) => {
+exports.updateExperienceById = async (req, res) => {
     try {
-      const { userId } = req.params;
+      const { id } = req.params;
       const { experience, templateId } = req.body;
       console.log(req.body);
   
-      const updatedExperience = await Experience.findOneAndUpdate(
-        { userId },
+      const updatedExperience = await ExperienceSchema.findOneAndUpdate(
+    { _id: id},
         { experience, templateId },
         { new: true } 
       );
@@ -57,11 +61,11 @@ exports.updateExperienceByUserId = async (req, res) => {
     }
   };
   // Delete experience by user ID
-exports.deleteExperienceByUserId = async (req, res) => {
+exports.deleteExperienceById = async (req, res) => {
     try {
-      const { userId } = req.params;
+      const { _id } = req.params;
   
-      const deletedExperience = await Experience.findOneAndDelete({ userId });
+      const deletedExperience = await ExperienceSchema.findOneAndDelete( _id);
   
       if (!deletedExperience) {
         return res.status(404).json({ message: 'Experience not found for this user.' });

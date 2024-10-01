@@ -22,8 +22,8 @@ exports.CreateEducation = async (req, res) => {
 
 exports.getEducations = async (req, res) => {
   try {
-    const { userId } = req.params;
-    const educations = await EducationSchema.find({ userId });
+    const { _id } = req.params;
+    const educations = await EducationSchema.find(_id);
     console.log(educations);
     return res.status(200).json(educations);
   } catch (error) {
