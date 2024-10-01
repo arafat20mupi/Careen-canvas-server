@@ -12,8 +12,8 @@ router.post("/createLanguage", createLanguage);
 //     get route
 router.get("/getLanguagesByUserId ", getLanguagesByUserId);
 //  update route
-router.patch("/updateLanguages ", updateLanguages);
+router.patch("/updateLanguages/:id ", updateLanguages);
 //  delete route
-router.delete("/deleteLanguages", deleteLanguages);
+router.delete("/deleteLanguages/:id", deleteLanguages);
 
 module.exports = router;

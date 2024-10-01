@@ -48,6 +48,7 @@ exports.getLanguagesByUserId = async (req, res) => {
 exports.updateLanguages = async (req, res) => {
   try {
     const { userId } = req.params;
+    
     const { languages } = req.body;
 
     // Validate that languages are provided
@@ -79,6 +80,7 @@ exports.updateLanguages = async (req, res) => {
 exports.deleteLanguages = async (req, res) => {
   try {
     const { userId } = req.params;
+    console.log(userId);
 
     const deletedLanguages = await LanguagesSchema.findOneAndDelete({ userId });
 
