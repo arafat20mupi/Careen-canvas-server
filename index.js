@@ -3,6 +3,8 @@ const app = express();
 const cors = require('cors');
 const UserRoute=require('./User/UserRoute')
 const educationRoute=require('./Education/EducationRoute')
+const LanguageRoute=require("./Languages/LanguageRoute")
+ const ExperienceRoute=require("./Experience/ExperienceRoute")
 const AwardRoute=require('./Awards/AwardsRoute')
 const CareerObjectiveRoute=require('./CareerObjective/CareerObjectiveRoute')
 const ContactRoute=require('./Contact/ContactRoute')
@@ -27,6 +29,11 @@ app.get("/", (req, res) => {
 // user route
 app.use("/api/users",UserRoute )
 // education
+app.use("/api/education",educationRoute )
+// language
+app.use("/api/language",LanguageRoute )
+// experience
+app.use("/api/Experience",ExperienceRoute )
 app.use("/api",educationRoute )
 // Awards 
 app.use("/api", AwardRoute )

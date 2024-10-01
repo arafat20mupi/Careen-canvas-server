@@ -12,8 +12,8 @@ router.post("/createExperience", createExperience);
 //     get route
 router.get("/getExperienceByUserId ", getExperienceByUserId);
 //  update route
-router.patch("/updateExperienceByUserId ", updateExperienceByUserId);
+router.patch("/updateExperienceByUserId/:id ", updateExperienceByUserId);
 //  delete route
-router.delete("/deleteExperienceByUserId", deleteExperienceByUserId);
+router.delete("/deleteExperienceByUserId/:id", deleteExperienceByUserId);
 
 module.exports = router;
