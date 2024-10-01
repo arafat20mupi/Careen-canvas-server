@@ -6,11 +6,12 @@ const educationRoute=require('./Education/EducationRoute')
 const AwardRoute=require('./Awards/AwardsRoute')
 const CareerObjectiveRoute=require('./CareerObjective/CareerObjectiveRoute')
 const ContactRoute=require('./Contact/ContactRoute')
-const NameRoute=require('./Name/NameRoute')
+const NameContactRoute=require('./NameAndContact/NameContactRoute')
 const ProjectsRoute=require('./Project/ProjectsRoute')
 const SkillRoute=require('./Skills/skillsRoute')
 const SummaryRoute=require('./Summary/SummaryRoute')
 const TitleRoute=require('./Title/TitleRoute')
+const certificatesRoutes = require("./Certificates/CertificateRoute")
 const connectDB=require("./Config/dbConfig")
  
 require("dotenv").config();
@@ -26,23 +27,25 @@ app.get("/", (req, res) => {
 // user route
 app.use("/api/users",UserRoute )
 // education
-app.use("/api/education",educationRoute )
+app.use("/api",educationRoute )
 // Awards 
-app.use("/api/awards", AwardRoute )
+app.use("/api", AwardRoute )
 // Career Objective
-app.use("/api/careersObjective",CareerObjectiveRoute);
+app.use("/api",CareerObjectiveRoute);
 // Contacts
-app.use("/api/contact", ContactRoute );
+app.use("/api", ContactRoute );
 // Name
-app.use("/api/name", NameRoute);
+app.use("/api", NameContactRoute);
 // Projects 
-app.use("/api/projects", ProjectsRoute);
+app.use("/api", ProjectsRoute);
 // skills
-app.use("/api/skills", SkillRoute);
+app.use("/api", SkillRoute);
 // Summary
-app.use("/api/summary", SummaryRoute);
+app.use("/api", SummaryRoute);
 // title
-app.use("/api/title", TitleRoute);
+app.use("/api", TitleRoute);
+// Certificate
+app.use('/api', certificatesRoutes); 
 
 
 // Server listening

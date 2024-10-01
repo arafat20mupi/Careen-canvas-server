@@ -3,8 +3,11 @@ const Award = require("./AwardsSchema");
 // Create a new award
 exports.createAward = async (req, res) => {
   try {
-    const { title, year, organization, userId, templateId } = req.body;
-    const newAward = new Award({ title, year, organization, userId, templateId });
+    const { awards, userId, templateId } = req.body; // Expecting awards as an array
+    if (!awards || !Array.isArray(awards)) {
+      return res.status(400).json({ message: 'Awards must be an array' });
+    }
+    const newAward = new Award({ awards, userId, templateId });
     await newAward.save();
     res.status(201).json({ message: 'Award created successfully', award: newAward });
   } catch (error) {
@@ -40,7 +43,7 @@ exports.getAwardById = async (req, res) => {
 exports.updateAward = async (req, res) => {
   try {
     const { id } = req.params;
-    const updatedAward = await Award.findByIdAndUpdate(id, req.body, { new: true });
+    const updatedAward = await Award.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
     if (!updatedAward) {
       return res.status(404).json({ message: 'Award not found' });
     }

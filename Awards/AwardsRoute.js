@@ -1,20 +1,27 @@
 const express = require('express');
-const { createAward, getAllAwards, getAwardById, updateAward, deleteAward } = require('./AwardsController');
+const {
+  createAward,
+  getAllAwards,
+  getAwardById,
+  updateAward,
+  deleteAward,
+} = require('./AwardsController');
+
 const router = express.Router();
 
-// Create an award
-router.post('/award', createAward);
+// Create a new award
+router.post('/awards', createAward); 
 
 // Get all awards
-router.get('/award', getAllAwards);
+router.get('/awards', getAllAwards); 
 
 // Get an award by ID
-router.get('/award/:id', getAwardById);
+router.get('/awards/:id', getAwardById); 
 
 // Update an award by ID
-router.put('/award/:id', updateAward);
+router.put('/awards/:id', updateAward); 
 
 // Delete an award by ID
-router.delete('/award/:id', deleteAward);
+router.delete('/awards/:id', deleteAward); 
 
 module.exports = router;

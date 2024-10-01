@@ -4,8 +4,8 @@ const {
   getAllProjects,
   getProjectById,
   updateProject,
-  deleteProject
-} = require('./ProjectsController'); // Adjust the path
+  deleteProject,
+} = require('./ProjectsController');
 
 const router = express.Router();
 

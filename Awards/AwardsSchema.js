@@ -1,18 +1,19 @@
 const mongoose = require('mongoose');
 
 const AwardsSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  year: {
-    type: Number,
-    required: true,
-  },
-  organization: {
-    type: String,
-    required: true,
-  },
+  awards: [
+    {
+      title: {
+        type: String,
+      },
+      year: {
+        type: Number,
+      },
+      organization: {
+        type: String,
+      },
+    },
+  ],
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -20,7 +21,7 @@ const AwardsSchema = new mongoose.Schema({
   templateId: {
     type: String,
   }
-});
+}, { timestamps: true }); 
 
 const Award = mongoose.model('Award', AwardsSchema);
 
