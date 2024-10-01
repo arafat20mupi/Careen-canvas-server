@@ -1,11 +1,17 @@
-const Skills = require("./skillsSchema");
+const Skills = require('./skillsSchema');
 
 // Create a new skills entry
 exports.createSkills = async (req, res) => {
   try {
-    const { skills } = req.body;
-    const newSkills = new Skills({ skills });
+    const { userId, templateId, skills } = req.body;
+
+    if (!skills || !Array.isArray(skills)) {
+      return res.status(400).json({ message: 'Skills must be an array' });
+    }
+
+    const newSkills = new Skills({ userId, templateId, skills });
     await newSkills.save();
+
     res.status(201).json({ message: 'Skills created successfully', skills: newSkills });
   } catch (error) {
     res.status(500).json({ message: 'Error creating skills', error });
@@ -15,7 +21,7 @@ exports.createSkills = async (req, res) => {
 // Get all skills
 exports.getAllSkills = async (req, res) => {
   try {
-    const skillsList = await Skills.find();
+    const skillsList = await Skills.find().populate('userId', 'name email');
     res.status(200).json(skillsList);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching skills', error });
@@ -26,7 +32,7 @@ exports.getAllSkills = async (req, res) => {
 exports.getSkillsById = async (req, res) => {
   try {
     const { id } = req.params;
-    const skills = await Skills.findById(id);
+    const skills = await Skills.findById(id).populate('userId', 'name email');
     if (!skills) {
       return res.status(404).json({ message: 'Skills not found' });
     }
@@ -40,7 +46,7 @@ exports.getSkillsById = async (req, res) => {
 exports.updateSkills = async (req, res) => {
   try {
     const { id } = req.params;
-    const updatedSkills = await Skills.findByIdAndUpdate(id, req.body, { new: true });
+    const updatedSkills = await Skills.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
     if (!updatedSkills) {
       return res.status(404).json({ message: 'Skills not found' });
     }
