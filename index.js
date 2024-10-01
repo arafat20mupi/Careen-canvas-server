@@ -7,7 +7,6 @@ const LanguageRoute=require("./Languages/LanguageRoute")
  const ExperienceRoute=require("./Experience/ExperienceRoute")
 const AwardRoute=require('./Awards/AwardsRoute')
 const CareerObjectiveRoute=require('./CareerObjective/CareerObjectiveRoute')
-const ContactRoute=require('./Contact/ContactRoute')
 const NameContactRoute=require('./NameAndContact/NameContactRoute')
 const ProjectsRoute=require('./Project/ProjectsRoute')
 const SkillRoute=require('./Skills/skillsRoute')
@@ -34,13 +33,12 @@ app.use("/api/education",educationRoute )
 app.use("/api/language",LanguageRoute )
 // experience
 app.use("/api/Experience",ExperienceRoute )
-app.use("/api",educationRoute )
+
 // Awards 
 app.use("/api", AwardRoute )
 // Career Objective
 app.use("/api",CareerObjectiveRoute);
-// Contacts
-app.use("/api", ContactRoute );
+
 // Name
 app.use("/api", NameContactRoute);
 // Projects 

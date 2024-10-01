@@ -7,7 +7,7 @@ const router = express.Router();
 //     get route
  router.get("/getEducations", getEducations)
 //  update route
-router.put("/updateEducation/:id",updateEducation)
+router.patch("/updateEducation/:id",updateEducation)
 //  delete route
 router. delete("/deleteEducation/:id",deleteEducation)
 
