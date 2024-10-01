@@ -18,7 +18,9 @@ const connectDB=require("./Config/dbConfig")
 require("dotenv").config();
 connectDB()
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://localhost:5174' ]
+}));
 app.use(express.json());
 //  Home route
 app.get("/", (req, res) => {
