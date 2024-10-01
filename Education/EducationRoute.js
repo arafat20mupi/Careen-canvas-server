@@ -1,5 +1,5 @@
 
-const express = require("express");
+const express = require( "express");
 const { CreateEducation, getEducations, updateEducation, deleteEducation } = require("./EducationController");
 const router = express.Router();
 //      post route
