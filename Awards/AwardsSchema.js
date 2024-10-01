@@ -1,17 +1,19 @@
 const mongoose = require('mongoose');
 
-const projectSchema = new mongoose.Schema({
-  projects: [
+const AwardsSchema = new mongoose.Schema({
+  awards: [
     {
       title: {
         type: String,
       },
-      description: {
+      year: {
+        type: Number,
+      },
+      organization: {
         type: String,
       },
-    }
-  ]
-  ,
+    },
+  ],
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -19,8 +21,8 @@ const projectSchema = new mongoose.Schema({
   templateId: {
     type: String,
   }
-}, { timestamps: true });
+}, { timestamps: true }); 
 
-const Projects = mongoose.model('Projects', projectSchema);
+const Award = mongoose.model('Award', AwardsSchema);
 
-module.exports = Projects;
+module.exports = Award;

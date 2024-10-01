@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const skillsSchema = new mongoose.Schema({
+const summarySchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -8,13 +8,11 @@ const skillsSchema = new mongoose.Schema({
   templateId: {
     type: String,
   },
-  skills: [
-    {
-      type: String,
-    },
-  ],
+  summary: {
+    type: String,
+  },
 }, { timestamps: true });
 
-const Skills = mongoose.model('Skills', skillsSchema);
+const Summary = mongoose.model('summary', summarySchema);
 
-module.exports = Skills;
+module.exports = Summary;

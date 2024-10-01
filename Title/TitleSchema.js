@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const skillsSchema = new mongoose.Schema({
+const titleSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -8,13 +8,11 @@ const skillsSchema = new mongoose.Schema({
   templateId: {
     type: String,
   },
-  skills: [
-    {
-      type: String,
-    },
-  ],
+  title: {
+    type: String,
+  },
 }, { timestamps: true });
 
-const Skills = mongoose.model('Skills', skillsSchema);
+const Title = mongoose.model('Title', titleSchema);
 
-module.exports = Skills;
+module.exports = Title;

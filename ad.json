@@ -1,0 +1,79 @@
+{
+  "name": "Jamie Chastain",
+  "title": "Project Manager",
+  "contact": {
+    "phone": "123-456-7890",
+    "email": "hello@reallygreatsite.com",
+    "website": "reallygreatsite.com"
+  },
+  "careerObjective": "I am a qualified and professional web developer with five years of experience in database administration and website design. Strong creative and analytical skills. Team player with an eye for detail.",
+  "summary": "Over 5 years of experience as a web developer with a focus on database administration, web content management, and project leadership.",
+  "skills": [
+    "ok",
+    "Web Design",
+    "Design Thinking",
+    "Wireframe Creation",
+    "Front End Coding",
+    "Problem-Solving",
+    "Computer Literacy",
+    "Project Management Tools",
+    "Strong Communication"
+  ],
+  "experience": [
+    {
+      "jobTitle": "Applications Developer",
+      "company": "Really Great Company",
+      "duration": "2016 - Present",
+      "responsibilities": [
+        "Database administration and website design",
+        "Built the logic for a streamlined ad-serving platform",
+        "Educational institutions and online classroom management"
+      ]
+    },
+    {
+      "jobTitle": "Web Content Manager",
+      "company": "Really Great Company",
+      "duration": "2014 - 2016",
+      "responsibilities": [
+        "Database administration and website design",
+        "Built the logic for a streamlined ad-serving platform",
+        "Educational institutions and online classroom management"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Technology",
+      "institution": "Really Great University",
+      "duration": "2014 - 2016"
+    },
+    {
+      "degree": "Secondary School",
+      "institution": "Really Great High School",
+      "duration": "2010 - 2014"
+    }
+  ],
+  "languages": [
+    "English",
+    "Spanish"
+  ],
+  "awards": [
+    {
+      "title": "Best Project Manager",
+      "year": 2019,
+      "organization": "Really Great Company"
+    }
+  ],
+  "certificates": [
+    {
+      "title": "Certified Web Developer",
+      "institution": "Web Development Institute"
+    }
+  ],
+  "projects": [
+    {
+      "title": "Ad-Serving Platform",
+      "description": "Developed an ad-serving platform for online classrooms with scalable infrastructure."
+    }
+  ]
+}
