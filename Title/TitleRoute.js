@@ -10,18 +10,18 @@ const {
 const router = express.Router();
 
 // Create a title entry
-router.post('/titles', createTitle);
+router.post('/title', createTitle);
 
 // Get all titles
-router.get('/titles', getAllTitles);
+router.get('/title', getAllTitles);
 
 // Get a title entry by ID
-router.get('/titles/:id', getTitleById);
+router.get('/title/:id', getTitleById);
 
 // Update a title entry by ID
-router.put('/titles/:id', updateTitle);
+router.put('/title/:id', updateTitle);
 
 // Delete a title entry by ID
-router.delete('/titles/:id', deleteTitle);
+router.delete('/title/:id', deleteTitle);
 
 module.exports = router;

@@ -1,71 +1,25 @@
-const Projects = require("./projectSchema");
+const express = require('express');
+const {
+  createProject,
+  getAllProjects,
+  getProjectById,
+  updateProject,
+  deleteProject,
+} = require('./ProjectsController');
+const authMiddleware = require('../Middelware/Middleware');
+
+const router = express.Router();
 
 // Create a new project
-exports.createProject = async (req, res) => {
-  try {
-    const { title, description, userId, templateId } = req.body;
+router.post('/projects',authMiddleware, createProject);
 
-    const newProject = new Projects({
-      projects: [{ title, description }],
-      userId,
-      templateId,
-    });
-
-    await newProject.save();
-    res.status(201).json({ message: 'Project created successfully', project: newProject });
-  } catch (error) {
-    res.status(500).json({ message: 'Error creating project', error });
-  }
-};
-
-// Get all projects
-exports.getAllProjects = async (req, res) => {
-  try {
-    const projects = await Projects.find().populate('userId', 'name email');
-    res.status(200).json(projects);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching projects', error });
-  }
-};
-
-// Get a specific project by ID
-exports.getProjectById = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const project = await Projects.findById(id).populate('userId', 'name email');
-    if (!project) {
-      return res.status(404).json({ message: 'Project not found' });
-    }
-    res.status(200).json(project);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching project', error });
-  }
-};
+// Get a project by ID
+router.get('/projects/:id/:templateId', getProjectById);
 
 // Update a project by ID
-exports.updateProject = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const updatedProject = await Projects.findByIdAndUpdate(id, req.body, { new: true });
-    if (!updatedProject) {
-      return res.status(404).json({ message: 'Project not found' });
-    }
-    res.status(200).json({ message: 'Project updated successfully', project: updatedProject });
-  } catch (error) {
-    res.status(500).json({ message: 'Error updating project', error });
-  }
-};
+router.put('/projects/:id/:templateId', updateProject);
 
 // Delete a project by ID
-exports.deleteProject = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const deletedProject = await Projects.findByIdAndDelete(id);
-    if (!deletedProject) {
-      return res.status(404).json({ message: 'Project not found' });
-    }
-    res.status(200).json({ message: 'Project deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ message: 'Error deleting project', error });
-  }
-};
+router.delete('/projects/:id/:templateId', deleteProject);
+
+module.exports = router;

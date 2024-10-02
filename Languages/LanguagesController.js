@@ -1,9 +1,9 @@
+
 const LanguagesSchema = require("./Languageschema");
 
 exports.createLanguage = async (req, res) => {
   try {
     const { userId, templateId, languages } = req.body;
-console.log(req.body);
     // Validate that languages are provided
     if (!languages || !Array.isArray(languages) || languages.length === 0) {
       return res
@@ -25,17 +25,18 @@ console.log(req.body);
   }
 };
 
-// Get language data by userId
+// Get languages data by userId and templateId
 exports.getLanguagesByUserId = async (req, res) => {
   try {
-    const { userId } = req.params;
+    const { id, templateId } = req.params;
 
-    const languages = await LanguagesSchema.findOne({ userId });
+    // Find languages matching userId and templateId
+    const languages = await LanguagesSchema.findOne({ userId: id, templateId });
 
     if (!languages) {
       return res
         .status(404)
-        .json({ message: "Languages not found for the given user." });
+        .json({ message: "Languages not found for the given user and template." });
     }
 
     res.status(200).json(languages);
@@ -47,8 +48,7 @@ exports.getLanguagesByUserId = async (req, res) => {
 // Update language data for a user
 exports.updateLanguages = async (req, res) => {
   try {
-    const { userId } = req.params;
-    
+    const { id, templateId } = req.params; // Get userId and templateId from the route
     const { languages } = req.body;
 
     // Validate that languages are provided
@@ -60,15 +60,15 @@ exports.updateLanguages = async (req, res) => {
 
     // Update the user's language data
     const updatedLanguages = await LanguagesSchema.findOneAndUpdate(
-      { userId },
+      { userId: id, templateId },
       { languages },
-      { new: true }
+      { new: true, runValidators: true }
     );
 
     if (!updatedLanguages) {
       return res
         .status(404)
-        .json({ message: "Languages not found for the given user." });
+        .json({ message: "Languages not found for the given user and template." });
     }
 
     res.status(200).json(updatedLanguages);
@@ -76,18 +76,18 @@ exports.updateLanguages = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
 // Delete language data for a user
 exports.deleteLanguages = async (req, res) => {
   try {
-    const { userId } = req.params;
-    console.log(userId);
+    const { id, templateId } = req.params;
 
-    const deletedLanguages = await LanguagesSchema.findOneAndDelete({ userId });
+    const deletedLanguages = await LanguagesSchema.findOneAndDelete({ userId: id, templateId });
 
     if (!deletedLanguages) {
       return res
         .status(404)
-        .json({ message: "Languages not found for the given user." });
+        .json({ message: "Languages not found for the given user and template." });
     }
 
     res.status(200).json({ message: "Languages deleted successfully." });

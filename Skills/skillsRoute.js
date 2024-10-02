@@ -6,22 +6,20 @@ const {
   updateSkills,
   deleteSkills,
 } = require('./skillsController');
+const authMiddleware = require('../Middelware/Middleware');
 
 const router = express.Router();
 
 // Create a new skills entry
-router.post('/skills', createSkills);
+router.post('/skills',authMiddleware, createSkills);
 
-// Get all skills
-router.get('/skills', getAllSkills);
+// Get a specific skills entry by userId and templateId
+router.get('/skills/:id/:templateId', getSkillsById);
 
-// Get a specific skills entry by ID
-router.get('/skills/:id', getSkillsById);
+// Update a skills entry by userId and templateId
+router.put('/skills/:id/:templateId', updateSkills);
 
-// Update a skills entry by ID
-router.put('/skills/:id', updateSkills);
-
-// Delete a skills entry by ID
-router.delete('/skills/:id', deleteSkills);
+// Delete a skills entry by userId and templateId
+router.delete('/skills/:id/:templateId', deleteSkills);
 
 module.exports = router;

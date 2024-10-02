@@ -2,14 +2,15 @@ const mongoose = require('mongoose');
 
 const titleSchema = new mongoose.Schema({
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    type: String ,
   },
   templateId: {
     type: String,
+    required: true,
   },
   title: {
     type: String,
+    required: true,
   },
 }, { timestamps: true });
 

@@ -11,59 +11,28 @@ https://careen-canvas-server.vercel.app
 ```
 
 
-```
-
-Admin Email: canvas@gmail.com
-
-Admin Password: 123456
-
-```
-
-
-### MongoDb Url
-
-```
-MONGO_URI=mongodb+srv://todo:todo123@cluster0.drqortc.mongodb.net/todo-app?retryWrites=true&w=majority
-
-```
-
-
-
 # Schema And Api Methods
 
 
 ## User
 
 ```
-  <!-- register route -->
   post('/api/users/register')
-  <!-- login -->
-  post('/api/users/login')
 
+  post('/api/users/login')
 ```
 
 ## NameContact 
 
 ```
-<!-- Create a new name contact entry -->
+  GET /api/name/name-contact/:id/:templateId
 
-post('/api/name-contact')
+  https://careen-canvas-server.vercel.app/api/name/name-contact/k7Fs6Hfy9CWjLe2h6A42H2DAZxg2/1
 
-<!-- Get all name contact entries -->
+  PUT /api/name/name-contact/:id/:templateId
 
-get('/api/name-contact')
+  DELETE /api/name/all-name-contact/:id/:templateId
 
-<!-- Get a specific name contact entry by ID -->
-
-get('/api/name-contact/:id')
-
-<!-- Update a name contact entry by  -->
-
-put('/api/name-contact/:id')
-
-<!-- Delete a name contact entry by  -->
-
-delete('/api/name-contact/:id')
 
 ```
 
@@ -71,41 +40,26 @@ delete('/api/name-contact/:id')
 
 
 ```
-<!-- Create a summary -->
-post('/api/summaries)
+  GET '/api/summaries/{userId}/{templateId}
+  
+  https://careen-canvas-server.vercel.app/api/summaries/k7Fs6Hfy9CWjLe2h6A42H2DAZxg2/1
 
-<!-- Get all summaries -->
-get('/api/summaries)
+  PUT '/api/summaries/{userId}/{templateId}
 
-<!-- Get a summary by ID -->
-get('/api/summaries/:id)
-
-<!-- Update a summary by ID -->
-put('/api/summaries/:id)
-
-<!-- Delete a summary by ID -->
-delete('/api/summaries/:id)
-
+  DELETE '/api/summaries/{userId}/{templateId}
 ```
 
 
 ## Title 
 
 ```
-<!-- Create a title entry -->
-post('/api/titles')
+  GET '/api/title/{userId}/{templateId}
+  
+  https://careen-canvas-server.vercel.app/api/title/k7Fs6Hfy9CWjLe2h6A42H2DAZxg2/1
 
-<!-- Get all titles -->
-get('/api/titles')
+  PUT '/api/title/{userId}/{templateId}
 
-<!-- Get a title entry by ID -->
-get('/api/titles/:id')
-
-<!-- Update a title entry by ID -->
-put('/api/titles/:id')
-
-<!-- Delete a title entry by ID -->
-delete('/api/titles/:id')
+  DELETE '/api/title/{userId}/{templateId}
 
 ```
 
@@ -115,151 +69,104 @@ delete('/api/titles/:id')
 
 
 ```
- <!-- Create a new skills entry -->
-post('/skills')
+  GET /api/skills/{userId}/{templateId}
 
- <!-- Get all skills -->
-get('/skills')
+  https://careen-canvas-server.vercel.app/api/skills/k7Fs6Hfy9CWjLe2h6A42H2DAZxg2/1
 
- <!-- Get a specific skills entry by ID -->
-get('/skills/:id')
-
- <!-- Update a skills entry by ID -->
-put('/skills/:id')
-
- <!-- Delete a skills entry by ID -->
-delete('/skills/:id')
+  PUT /api/skills/{userId}/{templateId}
+  
+  DELETE /api/skills/{userId}/{templateId}
 
 ```
 
 ## Projects 
 
 ```
- <!-- Create a new project -->
-post('/api/projects')
+  GET /api/projects/{userId}/{templateId}
 
- <!-- Get all projects -->
-get('/api/projects')
-
- <!-- Get a project by ID -->
-get('/api/projects/:id')
-
- <!-- Update a project by ID -->
-put('/api/projects/:id')
-
- <!-- Delete a project by ID -->
-delete('/api/projects/:id')
+  https://careen-canvas-server.vercel.app/api/projects/k7Fs6Hfy9CWjLe2h6A42H2DAZxg2/1
+  
+  PUT /api/projects/{userId}/{templateId}
+  
+  DELETE /api/projects/{userId}/{templateId}
 
 ```
 
 ## Certificate
 
 ```
+  GET /api/certificates/:id/:templateId
 
- <!-- Create a new certificate -->
-post('/api/certificates', )
-
- <!-- Get all certificates -->
-get('/api/certificates', )
-
- <!-- Get a certificate by ID -->
-get('/api/certificates/:id', )
-
- <!-- Update a certificate by ID -->
-put('/api/certificates/:id', )
-
- <!-- Delete a certificate by ID -->
-delete('/api/certificates/:id', )
-
+  https://careen-canvas-server.vercel.app/api/certificates/k7Fs6Hfy9CWjLe2h6A42H2DAZxg2/1
+  
+  GET /api/certificates/12345/67890/abcdef
+  
+  PUT /api/certificates/:id/:templateId
+  
+  DELETE /api/certificates/:id/:templateId
 ```
 
 ### Career objective
 
 ```
- <!-- Create a career objective -->
-post('/api/CareerObjective')
+  GET /api/CareerObjective/:id/:templateId
 
- <!-- Get all career objectives -->
-get('/api/CareerObjective')
+  https://careen-canvas-server.vercel.app/CareerObjective/k7Fs6Hfy9CWjLe2h6A42H2DAZxg2/1
 
- <!-- Get a career objective by ID -->
-get('/api/CareerObjective/:id')
+  PUT /api/CareerObjective/:id/:templateId
 
- <!-- Update a career objective by ID -->
-put('/api/CareerObjective/:id')
+  DELETE /api/CareerObjective/:id/:templateId
 
- <!-- Delete a career objective by ID -->
-delete('/api/CareerObjective/:id')
 
 ```
 
 ## Award 
 
 ```
- <!-- Create a new award -->
-post('/api/awards')
+  GET /api/awards/:id/:templateId
+  
+  https://careen-canvas-server.vercel.app/api/awards/k7Fs6Hfy9CWjLe2h6A42H2DAZxg2/1
 
- <!-- Get all awards -->
-get('/api/awards')
+  PUT /api/awards/:id/:templateId
 
- <!-- Get an award by ID -->
-get('/api/awards/:id')
-
- <!-- Update an award by ID -->
-put('/api/awards/:id')
-
- <!-- Delete an award by ID -->
-delete('/api/awards/:id')
-
+  DELETE /api/awards/:id/:templateId
 ```
 
 ### language
 
 
 ```
+  GET api/language/languages/:id/:templateId
+  
+  https://careen-canvas-server.vercel.app/api/language/languages/k7Fs6Hfy9CWjLe2h6A42H2DAZxg2/1
 
-      <!-- post route -->
-post("/api/language/createLanguage")
-     <!-- get route -->
-get("/api/language/getLanguagesByUserId ")
-  <!-- update route -->
-patch("/api/language/updateLanguages/:id ")
-  <!-- delete route -->
-delete("/api/language/deleteLanguages/:id")
-
+  PATCH api/language/languages/:id/:templateId
+  
+  DELETE api/language/languages/:id/:templateId
 ```
 
 
 ### Experience
 
 ```
-
-      <!-- post route -->
-post("/api/Experience/createExperience")
-     <!-- get route -->
-get("/api/Experience/getExperience")
-  <!-- update route -->
-patch("/api/Experience/updateExperienceById/:id")
-  <!-- delete route -->
-delete("/api/Experience/deleteExperienceById/:id")
-
+  GET api/Experience/getExperience/:id/:templateId
+  
+  https://careen-canvas-server.vercel.app/api/Experience/getExperience/k7Fs6Hfy9CWjLe2h6A42H2DAZxg2/1
+  
+  PATCH api/Experience/updateExperienceById/:id/:templateId
+  
+  DELETE  api/Experience/deleteExperienceById/:id/:templateId
 ```
 
 
 ### Education
 
 ```
+  GET /api/education/educations/{userId}/{templateId}
 
-      <!-- post route -->
- post("/api/education/CreateEducation")
-     <!-- get route -->
- get("/api/education/getEducations")
-  <!-- update route -->
-patch("/api/education/updateEducation/:id")
-  <!-- delete route -->
- delete("/api/education/deleteEducation/:id")
-
+  https://careen-canvas-server.vercel.app/api/education/educations/k7Fs6Hfy9CWjLe2h6A42H2DAZxg2/1
+  
+  PUT /api/education/educations/{userId}/{templateId}
+  
+  DELETE /api/education/educations/{userId}/{templateId}
 ``` 
-
-
-
