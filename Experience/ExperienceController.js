@@ -1,4 +1,4 @@
- const ExperienceSchema=require('./ExperienceSchema')
+const ExperienceSchema=require('./ExperienceSchema')
 
 // Create a new experience
 exports.createExperience = async (req, res) => {
@@ -19,61 +19,64 @@ exports.createExperience = async (req, res) => {
     }
   };
 
-  // Get experience by user ID
-  exports.getExperience = async (req, res) => {
-    try {
-      // Retrieve all experience records
-      const experience = await ExperienceSchema.find();
-  
-      // Check if experience data exists
-      if (!experience || experience.length === 0) {
-        return res.status(404).json({ message: 'No experience records found.' });
-      }
-  
-      // Respond with the experience data
-      res.status(200).json(experience);
-    } catch (error) {
-      // Handle any errors
-      res.status(400).json({ error: error.message });
+ // Get experience by userId and templateId
+exports.getExperience = async (req, res) => {
+  try {
+    const { id, templateId } = req.params; // Get userId and templateId from route parameters
+
+    // Find all experience records matching the userId and templateId
+    const experience = await ExperienceSchema.find({ userId: id, templateId });
+
+    // Check if experience data exists
+    if (!experience || experience.length === 0) {
+      return res.status(404).json({ message: 'No experience records found for this user and template.' });
     }
-  };
-  
-  // Update experience by user ID
+
+    // Respond with the experience data
+    res.status(200).json(experience);
+  } catch (error) {
+    // Handle any errors
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// Update experience by userId and templateId
 exports.updateExperienceById = async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { experience, templateId } = req.body;
-      console.log(req.body);
-  
-      const updatedExperience = await ExperienceSchema.findOneAndUpdate(
-    { _id: id},
-        { experience, templateId },
-        { new: true } 
-      );
-  
-      if (!updatedExperience) {
-        return res.status(404).json({ message: 'Experience not found for this user.' });
-      }
-  
-      res.status(200).json(updatedExperience);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
+  try {
+    const { id, templateId } = req.params; // Get userId and templateId from route parameters
+    const { experience } = req.body; // Get experience details from request body
+
+    const updatedExperience = await ExperienceSchema.findOneAndUpdate(
+      { userId: id, templateId }, // Find by userId and templateId
+      { experience },
+      { new: true, runValidators: true } // Return the updated document
+    );
+
+    if (!updatedExperience) {
+      return res.status(404).json({ message: 'Experience not found for this user and template.' });
     }
-  };
-  // Delete experience by user ID
+
+    res.status(200).json(updatedExperience);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// Delete experience by userId and templateId
 exports.deleteExperienceById = async (req, res) => {
-    try {
-      const { _id } = req.params;
-  
-      const deletedExperience = await ExperienceSchema.findOneAndDelete( _id);
-  
-      if (!deletedExperience) {
-        return res.status(404).json({ message: 'Experience not found for this user.' });
-      }
-  
-      res.status(200).json({ message: 'Experience deleted successfully.' });
-    } catch (error) {
-      res.status(400).json({ error: error.message });
+  try {
+    const { id, templateId } = req.params; // Get userId and templateId from route parameters
+
+    const deletedExperience = await ExperienceSchema.findOneAndDelete({ userId: id, templateId });
+
+    if (!deletedExperience) {
+      return res.status(404).json({ message: 'Experience not found for this user and template.' });
     }
-  };
+
+    res.status(200).json({ message: 'Experience deleted successfully.' });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
   

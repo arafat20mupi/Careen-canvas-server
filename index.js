@@ -27,32 +27,36 @@ app.get("/", (req, res) => {
   res.send("hello Developer");
 });
 
-// user route
-app.use("/api/users",UserRoute )
+// Name
+app.use("/api/name", NameContactRoute);
 // education
 app.use("/api/education",educationRoute )
 // language
 app.use("/api/language",LanguageRoute )
 // experience
 app.use("/api/Experience",ExperienceRoute )
-
-// Awards 
-app.use("/api", AwardRoute )
+// Certificate
+app.use('/api', certificatesRoutes); 
 // Career Objective
 app.use("/api",CareerObjectiveRoute);
-
-// Name
-app.use("/api", NameContactRoute);
-// Projects 
-app.use("/api", ProjectsRoute);
 // skills
 app.use("/api", SkillRoute);
+// Projects 
+app.use("/api", ProjectsRoute);
+// Awards 
+app.use("/api", AwardRoute )
+
+
+
+// user route
+app.use("/api/users",UserRoute )
+
+
+
 // Summary
 app.use("/api", SummaryRoute);
 // title
 app.use("/api", TitleRoute);
-// Certificate
-app.use('/api', certificatesRoutes); 
 
 
 // Server listening

@@ -7,10 +7,16 @@ const careerObjectiveSchema = new mongoose.Schema({
   },
   templateId: {
     type: String,
+    required: true,
   },
   title: {
     type: String
-  }
+  },
+  userId: {
+    type: String,
+    required: true,
+    
+  },
 }, { timestamps: true });
 
 const CareerObjective = mongoose.model('CareerObjective', careerObjectiveSchema);

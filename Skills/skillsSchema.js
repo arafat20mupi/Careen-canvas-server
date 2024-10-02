@@ -2,11 +2,12 @@ const mongoose = require('mongoose');
 
 const skillsSchema = new mongoose.Schema({
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    type: String,
+    required: true,
   },
   templateId: {
     type: String,
+    required: true,
   },
   skills: [
     {
