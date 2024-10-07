@@ -63,7 +63,7 @@ exports.deleteCareerObjective = async (req, res) => {
     res.status(500).json({ message: 'Error deleting Career Objective', error });
   }
 };
-const CareerObjective = require("./careerObjectiveSchema");
+
 
 // Create a new career objective
 exports.createCareerObjective = async (req, res) => {
