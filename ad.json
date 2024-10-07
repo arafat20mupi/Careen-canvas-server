@@ -75,5 +75,49 @@
       "title": "Ad-Serving Platform",
       "description": "Developed an ad-serving platform for online classrooms with scalable infrastructure."
     }
-  ]
+  ],
+
+
+
+
+
+  "jobTitle": "Full Stack Developer",
+  "company": "Tech Innovators",
+  "location": "San Francisco, CA",
+  "employmentType": "Full-time",
+  "salaryRange": "$80,000 - $120,000 per year",
+  "remoteOption": "Fully Remote Available",
+  "experience": "3-5 years preferred",
+  "jobDescription": "We are looking for a Full Stack Developer with experience in building high-performing, scalable, enterprise-grade applications. You will be responsible for the full software development life cycle, from concept and design to testing.",
+  "responsibilities": [
+    "Develop and maintain web applications using React and Node.js.",
+    "Design client-side and server-side architecture.",
+    "Ensure responsiveness and cross-platform optimization of applications.",
+    "Collaborate with the development team to create scalable software solutions."
+  ],
+  "requirements": [
+    "Proven experience as a Full Stack Developer or similar role.",
+    "Experience developing desktop and mobile applications.",
+    "Familiarity with common stacks (MERN, MEAN).",
+    "Knowledge of front-end technologies (HTML, CSS, JavaScript, React).",
+    "Familiarity with databases (MySQL, MongoDB), web servers (Apache), and UI/UX design."
+  ],
+  "skills": [
+    "JavaScript",
+    "React",
+    "Node.js",
+    "MongoDB",
+    "HTML & CSS",
+    "REST APIs"
+  ],
+  "applySection": {
+    "callToAction": "Ready to join our team?",
+    "applyLinkText": "Apply Now",
+    "applyLink": "#"
+  },
+  "footer": {
+    "company": "Tech Innovators",
+    "year": "2024",
+    "rights": "All Rights Reserved"
+  }
 }
