@@ -1,10 +1,12 @@
-const BlogSchema = require("./BlogSchema");
+
 
 //  add a blog
 
-exports.createBlog = async (req, res) => {
+const JobSchema = require("./JobSchema");
+
+exports.createJobs= async (req, res) => {
   try {
-    const blog = new BlogSchema(req.body);
+    const blog = new JobSchema(req.body);
     await blog.save();
     console.log(blog);
     res.status(201).json({
@@ -22,20 +24,47 @@ exports.createBlog = async (req, res) => {
 };
 
 //    get all blogs
-exports.getPaginatedBlogs = async (req, res) => {
-  const { page = 1, limit = 10 } = req.query;
+exports.getJobsByFlitterSearch = async (req, res) => {
+  const {jobTitle, location, salaryRange, employmentType, remoteOption, search, page = 1, limit = 10 } = req.query;
+    // Build filter object for MongoDB query
+  const filter = {};
+  if (jobTitle) filter.jobTitle = new RegExp(jobTitle, 'i');
+  if (location) filter.location = new RegExp(location, 'i');
+  if (employmentType) filter.employmentType = new RegExp(employmentType, 'i');
+  if (remoteOption) filter.remoteOption = new RegExp(remoteOption, 'i');
 
+
+  // Handle salary range filtering
+  if (salaryRange) {
+    const [minSalary, maxSalary] = salaryRange.split('-').map(Number);
+    if (!isNaN(minSalary) && !isNaN(maxSalary)) {
+        filter.salaryRange = { $gte: minSalary, $lte: maxSalary }; // Ensure you're using the right field
+    }
+}
+
+// Search across multiple fields
+if (search) {
+  filter.$or = [
+      { jobTitle: new RegExp(search, 'i') },
+      { location: new RegExp(search, 'i') },
+      { employmentType: new RegExp(search, 'i') },
+      { remoteOption: new RegExp(search, 'i') },
+      { 'responsibilities': { $in: [new RegExp(search, 'i')] } },
+      { 'requirements': { $in: [new RegExp(search, 'i')] } },
+      { 'skills': { $in: [new RegExp(search, 'i')] } }
+  ];
+}
   try {
-    const blogs = await BlogSchema.find()
+    const jobs= await JobSchema.find(filter)
       .limit(limit * 1)
       .skip((page - 1) * limit)
       .exec();
-
-    const count = await BlogSchema.countDocuments();
+console.log(jobs);
+    const count = await JobSchema.countDocuments(filter);
 
     res.status(200).json({
       success: true,
-      blogs,
+      jobs,
       totalPages: Math.ceil(count / limit),
       currentPage: Number(page),
     });
@@ -52,7 +81,7 @@ exports.getPaginatedBlogs = async (req, res) => {
 exports.getBlogById = async (req, res) => {
   try {
     const { id } = req.params;
-    const blog = await BlogSchema.findById(id);
+    const blog = await JobSchema.findById(id);
     if (!blog) {
       return res.status(404).json({
         success: false,
@@ -72,9 +101,9 @@ exports.getBlogById = async (req, res) => {
   }
 };
 //  update a blog
-exports.updateBlog = async (req, res) => {
+exports.updateJobs = async (req, res) => {
   try {
-    const blog = await BlogSchema.findByIdAndUpdate(req.params.id, req.body, {
+    const blog = await JobSchema.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
     if (!blog) {
@@ -97,9 +126,9 @@ exports.updateBlog = async (req, res) => {
   }
 };
 //  delete a blog
-exports.deleteBlog = async (req, res) => {
+exports.deleteJobs = async (req, res) => {
   try {
-    const blog = await BlogSchema.findByIdAndDelete(req.params.id);
+    const blog = await JobSchema.findByIdAndDelete(req.params.id);
     if (!blog) {
       return res.status(404).json({
         success: false,

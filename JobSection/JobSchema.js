@@ -1,7 +1,7 @@
 
 
 const mongoose= require('mongoose')
-  const BlogSchema= new mongoose.Schema({
+  const jobSchema= new mongoose.Schema({
     jobTitle:{
         type:String,
         required:true
@@ -19,7 +19,7 @@ const mongoose= require('mongoose')
         required:true
     },
     salaryRange:{
-        type:String,
+        type:Number,
         required:true
     },
     remoteOption:{
@@ -62,19 +62,19 @@ const mongoose= require('mongoose')
           type: String
         }
       },
-      footer: {
-        company: {
-          type: String,
-          required: true
-        },
-        year: {
-          type: String,
-          required: true
-        },
-        rights: {
-          type: String
-        }
-      }
+      // footer: {
+      //   company: {
+      //     type: String,
+      //     required: true
+      //   },
+      //   year: {
+      //     type: String,
+      //     required: true
+      //   },
+      //   rights: {
+      //     type: String
+      //   }
+      // }
     }, { timestamps: true });
 
-    module.exports= mongoose.model('Blog',BlogSchema)
+    module.exports= mongoose.model('Blog',jobSchema)
