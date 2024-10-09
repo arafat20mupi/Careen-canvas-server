@@ -5,6 +5,13 @@ exports.createCertificate = async (req, res) => {
   try {
     const { title, institution, userId, templateId } = req.body;
 
+    // Check if the templateId already exists
+    const existingCertificate = await Certificates.findOne({ templateId });
+    if (existingCertificate) {
+      return res.status(400).json({ message: 'This templateId is already in use' });
+    }
+
+    // Create a new certificate if the templateId is unique
     const newCertificate = new Certificates({
       certificates: [{ title, institution }],
       userId,
@@ -14,9 +21,10 @@ exports.createCertificate = async (req, res) => {
     await newCertificate.save();
     res.status(201).json({ message: 'Certificate created successfully', certificate: newCertificate });
   } catch (error) {
-    res.status(500).json({ message: 'Error creating certificate', error });
+    res.status(500).json({ message: 'Error creating certificate', error: error.message });
   }
 };
+
 // Get all certificates by userId and templateId
 exports.getAllCertificates = async (req, res) => {
   try {

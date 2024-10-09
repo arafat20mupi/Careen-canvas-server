@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const UserRoute=require('./User/UserRoute')
 const educationRoute=require('./Education/EducationRoute')
 const LanguageRoute=require("./Languages/LanguageRoute")
@@ -17,6 +18,7 @@ const JobRoute=require('./JobSection/JobRoute')
 const connectDB=require("./Config/dbConfig")
  
 require("dotenv").config();
+app.use(bodyParser.json()); 
 connectDB()
 // Middleware
 app.use(cors({
@@ -27,7 +29,7 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("hello Developer");
 });
-
+ 
 // Name
 app.use("/api/name", NameContactRoute);
 // education

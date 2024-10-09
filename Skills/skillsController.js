@@ -5,10 +5,18 @@ exports.createSkills = async (req, res) => {
   try {
     const { userId, templateId, skills } = req.body;
 
+    // Check if skills is an array
     if (!skills || !Array.isArray(skills)) {
       return res.status(400).json({ message: 'Skills must be an array' });
     }
 
+    // Check if the templateId already exists
+    const existingSkills = await Skills.findOne({ templateId });
+    if (existingSkills) {
+      return res.status(400).json({ message: 'This templateId is already in use' });
+    }
+
+    // If the templateId is unique, create a new skills entry
     const newSkills = new Skills({ userId, templateId, skills });
     await newSkills.save();
 

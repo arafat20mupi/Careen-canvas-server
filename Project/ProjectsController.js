@@ -1,17 +1,19 @@
 const Projects = require("./projectSchema");
 
-// Helper function for standardized error responses
-const handleError = (res, message, error) => {
-  return res.status(500).json({ message, error: error.message || error });
-};
+
 
 // Create a new project
 exports.createProject = async (req, res) => {
   try {
     const { title, description, userId, templateId } = req.body;
 
-    // Input validation could be done here
+    // Check if the templateId already exists
+    const existingProject = await Projects.findOne({ templateId });
+    if (existingProject) {
+      return res.status(400).json({ message: 'This templateId is already in use' });
+    }
 
+    // Create a new project if the templateId is unique
     const newProject = new Projects({
       projects: [{ title, description }],
       userId,
@@ -21,7 +23,7 @@ exports.createProject = async (req, res) => {
     await newProject.save();
     res.status(201).json({ message: 'Project created successfully', project: newProject });
   } catch (error) {
-    handleError(res, 'Error creating project', error);
+    res.status(500).json({ message: 'Error creating project', error: error.message });
   }
 };
 
@@ -48,7 +50,7 @@ exports.getAllProjects = async (req, res) => {
 exports.getProjectById = async (req, res) => {
   try {
     const { id, templateId } = req.params;
-    const project = await Projects.findOne({ _id: id, templateId });
+    const project = await Projects.findOne({ userId: id, templateId });
 
     if (!project) {
       return res.status(404).json({ message: 'Project not found' });
@@ -68,7 +70,7 @@ exports.updateProject = async (req, res) => {
 
     // Find the project and update the fields inside the projects array
     const updatedProject = await Projects.findOneAndUpdate(
-      { _id: id, templateId }, 
+      { userId: id, templateId }, 
       {
         $set: {
           "projects.0.title": title, // Update title of the first project
@@ -96,7 +98,7 @@ exports.updateProject = async (req, res) => {
 exports.deleteProject = async (req, res) => {
   try {
     const { id, templateId } = req.params;
-    const deletedProject = await Projects.findOneAndDelete({ _id: id, templateId });
+    const deletedProject = await Projects.findOneAndDelete({ userId: id, templateId });
 
     if (!deletedProject) {
       return res.status(404).json({ message: 'Project not found' });
