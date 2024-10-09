@@ -13,7 +13,7 @@ const SkillRoute=require('./Skills/skillsRoute')
 const SummaryRoute=require('./Summary/SummaryRoute')
 const TitleRoute=require('./Title/TitleRoute')
 const certificatesRoutes = require("./Certificates/CertificateRoute")
-const BlogRoute=require("./Blog/BlogRoute")
+const JobRoute=require('./JobSection/JobRoute')
 const connectDB=require("./Config/dbConfig")
  
 require("dotenv").config();
@@ -47,7 +47,7 @@ app.use("/api", ProjectsRoute);
 // Awards 
 app.use("/api", AwardRoute )
 //  Blogs
- app.use("/api",BlogRoute)
+ app.use("/api",JobRoute)
 
 
 
