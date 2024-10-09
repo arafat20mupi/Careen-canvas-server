@@ -8,7 +8,7 @@ const route= express.Router()
     //   register route
     route.post('/register',register),
     //  login
-   route.post('/login',authMiddleware,login)
+   route.post('/login',login)
 
 
 
