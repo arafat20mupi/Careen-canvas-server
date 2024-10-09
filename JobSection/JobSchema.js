@@ -20,7 +20,8 @@ const mongoose= require('mongoose')
     },
     salaryRange:{
         type:Number,
-        required:true
+        required:true,
+        
     },
     remoteOption:{
         type:String,
