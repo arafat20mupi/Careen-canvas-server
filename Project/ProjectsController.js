@@ -1,10 +1,19 @@
 const Projects = require("./projectSchema");
 
+
+
 // Create a new project
 exports.createProject = async (req, res) => {
   try {
     const { title, description, userId, templateId } = req.body;
 
+    // Check if the templateId already exists
+    const existingProject = await Projects.findOne({ templateId });
+    if (existingProject) {
+      return res.status(400).json({ message: 'This templateId is already in use' });
+    }
+
+    // Create a new project if the templateId is unique
     const newProject = new Projects({
       projects: [{ title, description }],
       userId,
@@ -14,31 +23,34 @@ exports.createProject = async (req, res) => {
     await newProject.save();
     res.status(201).json({ message: 'Project created successfully', project: newProject });
   } catch (error) {
-    res.status(500).json({ message: 'Error creating project', error });
+    res.status(500).json({ message: 'Error creating project', error: error.message });
   }
 };
 
-// Get all projects for a specific user and template
+
+// Get all projects from the database
 exports.getAllProjects = async (req, res) => {
   try {
-    const { id, templateId } = req.params; // Get userId and templateId from the route parameters
-    const projects = await Projects.find({ userId: id, templateId: templateId }).populate('userId', 'name email');
+    // Retrieve all projects
+    const projects = await Projects.find().populate('userId', 'name email');
 
     if (!projects || projects.length === 0) {
-      return res.status(404).json({ message: 'No projects found for this user and template' });
+      return res.status(404).json({ message: 'No projects found' });
     }
 
+    // Return the list of projects
     res.status(200).json(projects);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching projects', error });
   }
 };
 
+
 // Get a specific project by userId and templateId
 exports.getProjectById = async (req, res) => {
   try {
-    const { id, templateId } = req.params; // Get both userId and templateId from the route parameters
-    const project = await Projects.findOne({ userId: id, templateId: templateId });
+    const { id, templateId } = req.params;
+    const project = await Projects.findOne({ userId: id, templateId });
 
     if (!project) {
       return res.status(404).json({ message: 'Project not found' });
@@ -46,17 +58,25 @@ exports.getProjectById = async (req, res) => {
 
     res.status(200).json(project);
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching project', error: error.message });
+    handleError(res, 'Error fetching project', error);
   }
 };
 
 // Update a project by userId and templateId
 exports.updateProject = async (req, res) => {
   try {
-    const { id, templateId } = req.params; // Get both userId and templateId from the route parameters
+    const { id, templateId } = req.params; 
+    const { title, description } = req.body; // Destructure only the fields you need
+
+    // Find the project and update the fields inside the projects array
     const updatedProject = await Projects.findOneAndUpdate(
-      { userId: id, templateId: templateId }, // Find by userId and templateId
-      req.body,
+      { userId: id, templateId }, 
+      {
+        $set: {
+          "projects.0.title": title, // Update title of the first project
+          "projects.0.description": description // Update description of the first project
+        }
+      },
       { new: true, runValidators: true }
     );
 
@@ -64,17 +84,21 @@ exports.updateProject = async (req, res) => {
       return res.status(404).json({ message: 'Project not found' });
     }
 
-    res.status(200).json({ message: 'Project updated successfully', project: updatedProject });
+    res.status(200).json({
+      message: 'Project updated successfully',
+      project: updatedProject // Return the updated project
+    });
   } catch (error) {
-    res.status(500).json({ message: 'Error updating project', error: error.message });
+    handleError(res, 'Error updating project', error);
   }
 };
+
 
 // Delete a project by userId and templateId
 exports.deleteProject = async (req, res) => {
   try {
-    const { id, templateId } = req.params; // Get both userId and templateId from the route parameters
-    const deletedProject = await Projects.findOneAndDelete({ userId: id, templateId: templateId });
+    const { id, templateId } = req.params;
+    const deletedProject = await Projects.findOneAndDelete({ userId: id, templateId });
 
     if (!deletedProject) {
       return res.status(404).json({ message: 'Project not found' });
@@ -82,6 +106,6 @@ exports.deleteProject = async (req, res) => {
     
     res.status(200).json({ message: 'Project deleted successfully' });
   } catch (error) {
-    res.status(500).json({ message: 'Error deleting project', error });
+    handleError(res, 'Error deleting project', error);
   }
 };

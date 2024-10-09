@@ -5,12 +5,21 @@ const NameContact = require('./NameContactSchema');
 exports.createNameContact = async (req, res) => {
   try {
     const { name, contact, userId, templateId } = req.body;
-  
-  console.log(req.body)
+
+    console.log(req.body);
+
+    // Check if the contact is an object
     if (!contact || typeof contact !== 'object') {
       return res.status(400).json({ message: 'Contact information must be an object' });
     }
 
+    // Check if the templateId already exists
+    const existingNameContact = await NameContact.findOne({ templateId });
+    if (existingNameContact) {
+      return res.status(400).json({ message: 'This templateId is already in use' });
+    }
+
+    // If the templateId is unique, create a new name contact
     const newNameContact = new NameContact({ name, contact, userId, templateId });
     await newNameContact.save();
 
@@ -19,7 +28,6 @@ exports.createNameContact = async (req, res) => {
     res.status(500).json({ message: 'Error creating name contact', error });
   }
 };
-
 // Get all name contact entries by userId and templateId
 exports.getAllNameContacts = async (req, res) => {
   try {

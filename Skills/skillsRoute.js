@@ -11,7 +11,7 @@ const authMiddleware = require('../Middelware/Middleware');
 const router = express.Router();
 
 // Create a new skills entry
-router.post('/skills',authMiddleware, createSkills);
+router.post('/skills',createSkills);
 
 // Get a specific skills entry by userId and templateId
 router.get('/skills/:id/:templateId', getSkillsById);

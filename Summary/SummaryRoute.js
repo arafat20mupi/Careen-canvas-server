@@ -16,12 +16,12 @@ router.post('/summaries', createSummary);
 router.get('/summaries', getAllSummaries);
 
 // Get a summary by ID
-router.get('/summaries/:id', getSummaryById);
+router.get('/summaries/:id/:templateId', getSummaryById); 
 
 // Update a summary by ID
-router.put('/summaries/:id', updateSummary);
+router.put('/summaries/:id/:templateId', updateSummary); 
 
 // Delete a summary by ID
-router.delete('/summaries/:id', deleteSummary);
+router.delete('/summaries/:id/:templateId', deleteSummary); 
 
 module.exports = router;

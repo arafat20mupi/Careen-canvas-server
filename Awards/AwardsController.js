@@ -7,8 +7,17 @@ exports.createAward = async (req, res) => {
     if (!awards || !Array.isArray(awards)) {
       return res.status(400).json({ message: 'Awards must be an array' });
     }
+
+    // Check if the templateId already exists in the database
+    const existingAward = await Award.findOne({ templateId });
+    if (existingAward) {
+      return res.status(400).json({ message: 'This templateId is already in use' });
+    }
+
+    // If the templateId does not exist, create the new award
     const newAward = new Award({ awards, userId, templateId });
     await newAward.save();
+    
     res.status(201).json({ message: 'Award created successfully', award: newAward });
   } catch (error) {
     res.status(500).json({ message: 'Error creating award', error });
@@ -61,7 +70,7 @@ exports.getAwardById = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: 'Error fetching award', error: error.message });
   }
-};
+}; 
 
 // Update an award by userId and templateId
 exports.updateAward = async (req, res) => {
