@@ -10,12 +10,11 @@ const careerObjectiveSchema = new mongoose.Schema({
     required: true,
   },
   title: {
-    type: String
+    type: String,
   },
   userId: {
     type: String,
     required: true,
-    
   },
 }, { timestamps: true });
 

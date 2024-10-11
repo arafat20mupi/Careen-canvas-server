@@ -15,13 +15,13 @@ router.post('/title', createTitle);
 // Get all titles
 router.get('/title', getAllTitles);
 
-// Get a title entry by ID
-router.get('/title/:id', getTitleById);
+// Get a title entry by userId and templateId
+router.get('/title/:id/:templateId', getTitleById);
 
-// Update a title entry by ID
-router.put('/title/:id', updateTitle);
+// Update a title entry by userId and templateId
+router.put('/title/:id/:templateId', updateTitle);
 
-// Delete a title entry by ID
-router.delete('/title/:id', deleteTitle);
+// Delete a title entry by userId and templateId
+router.delete('/title/:id/:templateId', deleteTitle);
 
 module.exports = router;
