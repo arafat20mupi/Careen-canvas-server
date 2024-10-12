@@ -31,7 +31,7 @@ exports.login = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) return res.status(400).send("User not found");
-    
+
     const isMatch = await user.comparePassword(password);
 
     if (!isMatch) return res.status(400).send("Invalid credentials");
@@ -56,6 +56,31 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
+// Check Admin Status// Check Admin Status// Check Admin Status
+exports.checkAdmin = async (req, res) => {
+  const { uid } = req.params;
+
+  if (!uid || typeof uid !== 'string' || uid.length === 0) {
+    return res.status(400).json({ error: "Invalid UID provided" });
+  }
+
+  try {
+    const userRecord = await admin.auth().getUser(uid);
+    const isAdmin = userRecord.customClaims && userRecord.customClaims.role === 'admin';
+
+    res.status(200).json({ isAdmin });
+  } catch (error) {
+    console.error("Error checking admin status:", error);
+
+    if (error.code === 'auth/user-not-found') {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+
 // Delete User
 exports.deleteUser = async (req, res) => {
   const { uid } = req.params;
@@ -71,13 +96,25 @@ exports.deleteUser = async (req, res) => {
 
 // Change User Role
 exports.changeUserRole = async (req, res) => {
-  const { uid, role } = req.body;
+  const { email, role } = req.body;
   try {
+    // Find Firebase user by email
+    const userRecord = await admin.auth().getUserByEmail(email);
+    const uid = userRecord.uid;
+
+    // Set custom claims for the user
     await admin.auth().setCustomUserClaims(uid, { role });
+
+    // Optionally, update your local DB if needed
     await User.findOneAndUpdate({ firebaseUid: uid }, { role }, { new: true });
 
-    res.status(200).send(`User role changed to ${role}`);
+    // Respond with JSON instead of a plain string
+    res.status(200).json({ message: `User role changed to ${role}` });
   } catch (error) {
+    // Log the error for debugging
+    console.error("Error changing user role:", error);
+
+    // Respond with an error message in JSON format
     res.status(500).json({ error: error.message });
   }
 };
