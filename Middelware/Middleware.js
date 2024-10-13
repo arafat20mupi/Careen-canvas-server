@@ -2,13 +2,13 @@
 
 require('dotenv').config(); // Import dotenv to read .env file
 const admin = require('firebase-admin');
-const serviceAccount = require('../Config/careenCavbas.json')
+const serviceAccount = require('../Config/carearcanvas.json')
 
 
 // Initialize Firebase with credentials
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://carearcanvas.firebaseio.com' // Update with your project URL
+  databaseURL: 'https://CarearCanvas.firebaseio.com' 
 
 });
 // console.log(serviceAccount);

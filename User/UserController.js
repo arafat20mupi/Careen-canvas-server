@@ -45,13 +45,22 @@ exports.login = async (req, res) => {
 // Get All Users
 exports.getAllUsers = async (req, res) => {
   try {
+    // Firebase theke users niye asha
     const listUsersResult = await admin.auth().listUsers();
-    const firebaseUsers = listUsersResult.users;
+    const firebaseUsers = listUsersResult.users; // Firebase er users array
 
-    const dbUsers = await User.find();
+    // MongoDB theke users niye asha
+    let dbUsers = [];
+    try {
+      dbUsers = await User.find(); // User hocche apnar MongoDB user model
+    } catch (dbError) {
+      console.error('Database error:', dbError);
+    }
 
+    // Firebase ebong MongoDB users ke ek sathe response er maddhome pathano
     res.status(200).json({ firebaseUsers, dbUsers });
   } catch (error) {
+    console.error('Firebase user error:', error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -83,16 +92,19 @@ exports.checkAdmin = async (req, res) => {
 
 // Delete User
 exports.deleteUser = async (req, res) => {
-  const { uid } = req.params;
-  try {
-    await admin.auth().deleteUser(uid);
-    await User.findOneAndDelete({ firebaseUid: uid });
+  const { uid } = req.params; // Get the Firebase UID from the request parameters
 
-    res.status(200).send("User deleted successfully");
+  try {
+    // Delete the user directly from Firebase
+    await admin.auth().deleteUser(uid);
+
+    res.status(200).send("User deleted successfully from Firebase");
   } catch (error) {
+    console.error("Error deleting user from Firebase:", error);
     res.status(500).json({ error: error.message });
   }
 };
+
 
 // Change User Role
 exports.changeUserRole = async (req, res) => {
@@ -115,6 +127,39 @@ exports.changeUserRole = async (req, res) => {
     console.error("Error changing user role:", error);
 
     // Respond with an error message in JSON format
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Update User
+exports.updateUser = async (req, res) => {
+  const { uid } = req.params; // Get the Firebase UID from the request parameters
+  const updateData = req.body; // Get the updated data from the request body
+
+  try {
+    // Prepare the data for Firebase update
+    const firebaseUpdates = {};
+
+    // Only include fields that are present in the request body
+    if (updateData.email) firebaseUpdates.email = updateData.email;
+    if (updateData.displayName) firebaseUpdates.displayName = updateData.displayName;
+
+    // Update user in Firebase if there are fields to update
+    const updatedUser = await admin.auth().updateUser(uid, firebaseUpdates);
+
+    // Update user in MongoDB
+    const updatedDBUser = await User.findOneAndUpdate(
+      { firebaseUid: uid },
+      { ...updateData }, // Update with all fields provided
+      { new: true }
+    );
+    res.status(200).json({
+      message: "User updated successfully",
+      firebaseUser: updatedUser,
+      dbUser: updatedDBUser,
+    });
+  } catch (error) {
+    console.error("Error updating user:", error);
     res.status(500).json({ error: error.message });
   }
 };
