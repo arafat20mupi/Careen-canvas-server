@@ -17,9 +17,22 @@ https://careen-canvas-server.vercel.app
 ## User
 
 ```
-  post('/api/users/register')
 
-  post('/api/users/login')
+<!-- Register Route -->
+post("/api/users/register", register)
+
+<!-- Login Route -->
+post("/api/users/login", login)
+
+<!-- Get All Users Route -->
+get("/api/users")
+
+<!-- Delete User Route -->
+delete("/api/users/:uid")
+
+<!-- Change User Role Route -->
+put("/api/users/role")
+
 ```
 
 ## NameContact 
