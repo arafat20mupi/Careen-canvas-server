@@ -1,6 +1,6 @@
 // UserRoutes.js
 const express = require("express");
-const { register, login, getAllUsers, deleteUser, changeUserRole, checkAdmin , updateUser} = require("./UserController");
+const { register, login, getAllUsers, deleteUser, changeUserRole, checkAdmin, updateUser } = require("./UserController");
 const authMiddleware = require("../Middelware/Middleware");
 
 const route = express.Router();
@@ -21,9 +21,9 @@ route.delete("/:uid", authMiddleware, deleteUser);
 route.put("/role", authMiddleware, changeUserRole);
 
 // Check Admin Status Route
-route.get("/check-admin/:uid", authMiddleware, checkAdmin); 
+route.get("/check-admin/:uid", authMiddleware, checkAdmin);
 
 // Update User 
-route.put('/:uid' , authMiddleware , updateUser)
+route.put('/:uid', authMiddleware, updateUser)
 
 module.exports = route;
