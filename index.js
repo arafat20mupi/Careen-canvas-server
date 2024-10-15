@@ -17,10 +17,10 @@ const SummaryRoute=require('./Summary/SummaryRoute')
 const TitleRoute=require('./Title/TitleRoute')
 const certificatesRoutes = require("./Certificates/CertificateRoute")
 const JobRoute=require('./JobSection/JobRoute')
+const PaymentsRoute=require('./Payment/PaymentRoute')
 const connectDB=require("./Config/dbConfig")
- 
-require("dotenv").config();
 
+require("dotenv").config();
 // Body parser middleware to parse JSON request bodies
 app.use(bodyParser.json()); 
 app.use(express.urlencoded({ extended: true }));
@@ -69,7 +69,10 @@ app.use("/api", SummaryRoute);
 // title
 app.use("/api", TitleRoute);
 
+  //  payment  related api
+ app.use('/api', PaymentsRoute)
 
+  
 // Server listening
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
