@@ -39,16 +39,19 @@ exports.getJobs = async (req, res) => {
 };
 
 exports.getJobsByFilterSearch = async (req, res) => {
+  const { searchQuery } = req.query;
   const {
     jobTitle,
     location,
     salaryRange = [],
     employmentType,
     remoteOption, // This corresponds to JobType in frontend
-    search,
+    search = searchQuery,
     page = 1,
     limit = 10,
   } = req.query;
+
+  console.log(req.query)
 
   // Build filter object for MongoDB query
   const filter = {};
@@ -71,7 +74,20 @@ exports.getJobsByFilterSearch = async (req, res) => {
       }
     });
   }
-  if (search) filter.$text = { $search: search };
+  // if (search) filter.$text = { $search: search };
+  // Search across multiple fields
+   if (search) {
+         filter.$or = [
+             { jobTitle: new RegExp(search, 'i') },
+             { location: new RegExp(search, 'i') },
+             { employmentType: new RegExp(search, 'i') },
+             { remoteOption: new RegExp(search, 'i') },
+             { 'responsibilities': { $in: [new RegExp(search, 'i')] } },
+             { 'requirements': { $in: [new RegExp(search, 'i')] } },
+             { 'skills': { $in: [new RegExp(search, 'i')] } }
+         ];
+        }
+  console.log(search)
 
   try {
     const jobs = await JobSchema.find(filter)
