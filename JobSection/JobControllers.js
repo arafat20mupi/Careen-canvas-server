@@ -43,6 +43,7 @@ exports.getJobsByFilterSearch = async (req, res) => {
   const {
     jobTitle,
     location,
+    sortBy,
     salaryRange = [],
     employmentType,
     remoteOption, // This corresponds to JobType in frontend
@@ -51,13 +52,13 @@ exports.getJobsByFilterSearch = async (req, res) => {
     limit = 10,
   } = req.query;
 
-  console.log(req.query)
+  console.log(req.query);
 
   // Build filter object for MongoDB query
   const filter = {};
   if (jobTitle) filter.jobTitle = new RegExp(jobTitle, "i");
   if (location) filter.location = new RegExp(location, "i");
-  if (employmentType) filter.employmentType = { $in:employmentType };
+  if (employmentType) filter.employmentType = { $in: employmentType };
   if (remoteOption) filter.remoteOption = { $in: remoteOption }; // Use array for multiple options
   if (salaryRange.length > 0) {
     filter.$or = salaryRange.map((range) => {
@@ -76,22 +77,23 @@ exports.getJobsByFilterSearch = async (req, res) => {
   }
   // if (search) filter.$text = { $search: search };
   // Search across multiple fields
-   if (search) {
-         filter.$or = [
-             { jobTitle: new RegExp(search, 'i') },
-             { location: new RegExp(search, 'i') },
-             { employmentType: new RegExp(search, 'i') },
-             { remoteOption: new RegExp(search, 'i') },
-             { 'responsibilities': { $in: [new RegExp(search, 'i')] } },
-             { 'requirements': { $in: [new RegExp(search, 'i')] } },
-             { 'skills': { $in: [new RegExp(search, 'i')] } }
-         ];
-        }
-  console.log(search)
+  if (search) {
+    filter.$or = [
+      { jobTitle: new RegExp(search, "i") },
+      { location: new RegExp(search, "i") },
+      { employmentType: new RegExp(search, "i") },
+      { remoteOption: new RegExp(search, "i") },
+      { responsibilities: { $in: [new RegExp(search, "i")] } },
+      { requirements: { $in: [new RegExp(search, "i")] } },
+      { skills: { $in: [new RegExp(search, "i")] } },
+    ];
+  }
+  console.log(search);
 
   try {
+    const sortOrder = sortBy === "newest" ? -1 : 1;
     const jobs = await JobSchema.find(filter)
-      .sort({ createdAt: -1 }) // Add sorting logic
+      .sort({ date: sortOrder }) // Add sorting logic
       .skip((page - 1) * limit)
       .limit(Number(limit));
     const totalJobs = await JobSchema.countDocuments(filter);
