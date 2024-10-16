@@ -33,6 +33,10 @@ const jobSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    longDescription: {
+      type: String,
+      required: true,
+    },
     responsibilities: [
       {
         type: String,
@@ -43,6 +47,14 @@ const jobSchema = new mongoose.Schema(
         type: String,
       },
     ],
+    userId: {
+      type: String,
+      required: true
+    },
+    date: {
+      type: Date,
+      required: true
+    },
     skills: [
       {
         type: String,
@@ -61,19 +73,7 @@ const jobSchema = new mongoose.Schema(
         type: String,
       },
     },
-    // footer: {
-    //   company: {
-    //     type: String,
-    //     required: true
-    //   },
-    //   year: {
-    //     type: String,
-    //     required: true
-    //   },
-    //   rights: {
-    //     type: String
-    //   }
-    // }
+
   },
   { timestamps: true }
 );
