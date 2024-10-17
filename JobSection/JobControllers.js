@@ -88,7 +88,7 @@ exports.getJobsByFilterSearch = async (req, res) => {
       { skills: { $in: [new RegExp(search, "i")] } },
     ];
   }
-  console.log(search);
+  // console.log(search);
 
   try {
     const sortOrder = sortBy === "newest" ? -1 : 1;

@@ -52,11 +52,10 @@ exports.payments = async (req, res) => {
       email,
       status,
     });
-    await newPayment.save();
-    console.log(newPayment);
-    return res
-      .status(201)
-      .json({ message: "Payment successful", payment: newPayment });
+    const  payment= await newPayment.save();
+    console.log( ' this is from ',payment);
+    
+    return res.status(201).send( payment);
   } catch (error) {
     console.error("Error creating payment:", error);
     return res.status(500).json({
