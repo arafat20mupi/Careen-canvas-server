@@ -64,20 +64,36 @@ exports.getJobsByFilterSearch = async (req, res) => {
   // Use array for multiple options
 
 // Filter by experience range (mapped to numbers)
+// if (experience && experience.length > 0) {
+//   filter.$or = experience.map((range) => {
+//     if (range.includes("0-1")) {
+//       return { experience: { $gte: 0, $lte: 1 } }; // Beginner
+//     }
+//     if (range.includes("1-3")) {
+//       return { experience: { $gte: 1, $lte: 3 } }; // Intermediate
+//     }
+//     if (range.includes("3+")) {
+//       return { experience: { $gt: 3 } }; // Expert
+//     }
+//     return {}; // Fallback (optional)
+//   });
+// }
+
 if (experience && experience.length > 0) {
   filter.$or = experience.map((range) => {
-    if (range.includes("0-1")) {
-      return { experience: { $gte: 0, $lte: 1 } }; // Beginner
+    switch (true) {
+      case range.includes("0-1"):
+        return { experience: { $gte: 0, $lte: 1 } }; // Beginner
+      case range.includes("2-3"):
+        return { experience: { $gte: 2, $lte: 3 } }; // Intermediate
+      case range.includes("3+"):
+        return { experience: { $gt: 3 } }; // Expert
+      default:
+        return {}; // Fallback, optional in case of invalid input
     }
-    if (range.includes("1-3")) {
-      return { experience: { $gte: 1, $lte: 3 } }; // Intermediate
-    }
-    if (range.includes("3+")) {
-      return { experience: { $gt: 3 } }; // Expert
-    }
-    return {}; // Fallback (optional)
   });
 }
+
 
   if (salaryRange.length > 0) {
     filter.$or = salaryRange.map((range) => {
@@ -94,7 +110,6 @@ if (experience && experience.length > 0) {
       }
     });
   }
-  // if (search) filter.$text = { $search: search };
   // Search across multiple fields
   if (search) {
     filter.$or = [
@@ -107,7 +122,6 @@ if (experience && experience.length > 0) {
       { skills: { $in: [new RegExp(search, "i")] } },
     ];
   }
-  // console.log(search);
 
   try {
     const sortOrder = sortBy === "newest" ? -1 : 1;
