@@ -9,6 +9,7 @@ const JobRoute = require('./JobSection/JobRoute')
 const PaymentsRoute = require('./Payment/PaymentRoute')
 const connectDB = require("./Config/dbConfig")
 const FromData = require("./FromData/formDataRoutes")
+ const PDFRoute= require('./PDF/PdfRoute')
 require("dotenv").config();
 // Body parser middleware to parse JSON request bodies
 app.use(bodyParser.json());
@@ -39,7 +40,8 @@ app.use('/api' ,  FromData )
 
 //  payment  related api
 app.use('/api', PaymentsRoute)
-
+//   Pdf
+ app.use('/api',PDFRoute)
 
 // Server listening
 const PORT = process.env.PORT || 8000;
