@@ -39,27 +39,26 @@ exports.createPaymentIntent = async (req, res) => {
 exports.payments = async (req, res) => {
   try {
     const { amount, paymentIntentId, email, status } = req.body;
+
     // Validate the incoming payment data
     if (!amount || !paymentIntentId || !email || !status) {
-      return res
-        .status(400)
-        .json({ message: "Missing required payment fields." });
+      return res.status(400).json({ message: "Missing required payment fields." });
     }
-    // Create and save the payment to the database
-    const newPayment = new Payment({
-      paymentIntentId,
-      amount,
-      email,
-      status,
-    });
-    const  payment= await newPayment.save();
-    console.log( ' this is from ',payment);
+
+    // Find and update the existing payment or create a new one
+    const payment = await Payment.findOneAndUpdate(
+      { email },
+      { paymentIntentId, amount, status },
+      { new: true, upsert: true } // upsert creates a new document if no document matches the query
+    );
+
+    console.log('Payment saved/updated:', payment);
     
-    return res.status(201).send( payment);
+    return res.status(201).send(payment);
   } catch (error) {
-    console.error("Error creating payment:", error);
+    console.error("Error creating/updating payment:", error);
     return res.status(500).json({
-      message: "Server error during payment creation",
+      message: "Server error during payment creation/update",
       error: error.message,
     });
   }

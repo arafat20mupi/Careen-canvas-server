@@ -61,38 +61,21 @@ exports.getJobsByFilterSearch = async (req, res) => {
   if (location) filter.location = new RegExp(location, "i");
   if (employmentType) filter.employmentType = { $in: employmentType };
   if (remoteOption) filter.remoteOption = { $in: remoteOption };
-  // Use array for multiple options
 
-// Filter by experience range (mapped to numbers)
-// if (experience && experience.length > 0) {
-//   filter.$or = experience.map((range) => {
-//     if (range.includes("0-1")) {
-//       return { experience: { $gte: 0, $lte: 1 } }; // Beginner
-//     }
-//     if (range.includes("1-3")) {
-//       return { experience: { $gte: 1, $lte: 3 } }; // Intermediate
-//     }
-//     if (range.includes("3+")) {
-//       return { experience: { $gt: 3 } }; // Expert
-//     }
-//     return {}; // Fallback (optional)
-//   });
-// }
-
-if (experience && experience.length > 0) {
-  filter.$or = experience.map((range) => {
-    switch (true) {
-      case range.includes("0-1"):
-        return { experience: { $gte: 0, $lte: 1 } }; // Beginner
-      case range.includes("2-3"):
-        return { experience: { $gte: 2, $lte: 3 } }; // Intermediate
-      case range.includes("3+"):
-        return { experience: { $gt: 3 } }; // Expert
-      default:
-        return {}; // Fallback, optional in case of invalid input
-    }
-  });
-}
+  if (experience && experience.length > 0) {
+    filter.$or = experience.map((range) => {
+      switch (true) {
+        case range.includes("0-1"):
+          return { experience: { $gte: 0, $lte: 1 } }; // Beginner
+        case range.includes("2-3"):
+          return { experience: { $gte: 2, $lte: 3 } }; // Intermediate
+        case range.includes("3+"):
+          return { experience: { $gt: 3 } }; // Expert
+        default:
+          return {}; // Fallback, optional in case of invalid input
+      }
+    });
+  }
 
 
   if (salaryRange.length > 0) {
