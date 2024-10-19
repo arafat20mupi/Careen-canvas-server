@@ -7,12 +7,9 @@ const route = express.Router();
 
 // Register Route
 route.post("/register", register);
-    // //   register route
-    // route.post('/register',register),
-    //  login
-   route.post('/login',login)
-// // Login Route
-// route.post("/login", login);
+
+//  login Route
+route.post('/login', login)
 
 // Get All Users Route
 route.get("/", authMiddleware, getAllUsers);

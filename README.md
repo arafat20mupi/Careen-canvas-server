@@ -11,6 +11,13 @@ https://careen-canvas-server.vercel.app
 ```
 
 
+```
+admin email : arafat1@gmail.com
+
+admin pass : Arafat@
+
+```
+
 # Schema And Api Methods
 
 
