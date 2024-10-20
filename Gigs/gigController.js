@@ -142,9 +142,6 @@ const getAllGigsByFilter = async (req, res) => {
     }
 }
 
-
-
-
 // Approve a gig by project ID  (Admin work)
 const approveGig = async (req, res) => {
     try {
