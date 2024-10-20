@@ -4,13 +4,13 @@ const JobSchema = require("./JobSchema");
 
 exports.createJobs = async (req, res) => {
   try {
-    const blog = new JobSchema(req.body);
-    await blog.save();
-    console.log(blog);
+    const job = new JobSchema(req.body);
+    await job.save();
+    console.log(job);
     res.status(201).json({
       success: true,
       message: "Job listing created successfully!",
-      blog,
+      job,
     });
   } catch (error) {
     res.status(400).json({
@@ -76,7 +76,6 @@ exports.getJobsByFilterSearch = async (req, res) => {
       }
     });
   }
-
 
   if (salaryRange.length > 0) {
     filter.$or = salaryRange.map((range) => {
@@ -146,7 +145,7 @@ exports.getBlogById = async (req, res) => {
 //  update a blog
 exports.updateJobs = async (req, res) => {
   try {
-    const blog = await JobSchema.findByIdAndUpdate(req.params.id, req.body, {
+    const job = await JobSchema.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
     if (!blog) {
@@ -157,7 +156,7 @@ exports.updateJobs = async (req, res) => {
     }
     res.status(200).json({
       message: "Job listing updated successfully!",
-      blog,
+      job,
     });
     console.log(blog);
   } catch (error) {
@@ -171,8 +170,8 @@ exports.updateJobs = async (req, res) => {
 //  delete a blog
 exports.deleteJobs = async (req, res) => {
   try {
-    const blog = await JobSchema.findByIdAndDelete(req.params.id);
-    if (!blog) {
+    const job = await JobSchema.findByIdAndDelete(req.params.id);
+    if (!job) {
       return res.status(404).json({
         success: false,
         message: "Job listing not found",
