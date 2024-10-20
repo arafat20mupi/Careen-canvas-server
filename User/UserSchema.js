@@ -30,6 +30,9 @@ const UserSchemaMethod = require("./UserSchema Method")
       enum: ["user", "admin", ],
       default: "user", 
     },
+   approvedProjects:{
+      ids:[{type:String}]
+   }
  },{
     timestamps:true
  })
