@@ -1,5 +1,6 @@
 const admin = require("firebase-admin");
 const User = require("./UserSchema");
+const { sendCongratulatoryEmail } = require("../Nodemailer/email");
 
 // Register User
 exports.register = async (req, res) => {
@@ -17,7 +18,9 @@ exports.register = async (req, res) => {
       firebaseUid: firebaseUser.uid,
     });
     await user.save();
-
+    // Send a congratulatory email
+    sendCongratulatoryEmail(email, name);
+    console.log(email,name);
     res.status(200).send("User is registered");
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -54,13 +57,13 @@ exports.getAllUsers = async (req, res) => {
     try {
       dbUsers = await User.find(); // User hocche apnar MongoDB user model
     } catch (dbError) {
-      console.error('Database error:', dbError);
+      console.error("Database error:", dbError);
     }
 
     // Firebase ebong MongoDB users ke ek sathe response er maddhome pathano
     res.status(200).json({ firebaseUsers, dbUsers });
   } catch (error) {
-    console.error('Firebase user error:', error);
+    console.error("Firebase user error:", error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -69,26 +72,25 @@ exports.getAllUsers = async (req, res) => {
 exports.checkAdmin = async (req, res) => {
   const { uid } = req.params;
 
-  if (!uid || typeof uid !== 'string' || uid.length === 0) {
+  if (!uid || typeof uid !== "string" || uid.length === 0) {
     return res.status(400).json({ error: "Invalid UID provided" });
   }
 
   try {
     const userRecord = await admin.auth().getUser(uid);
-    const isAdmin = userRecord.customClaims && userRecord.customClaims.role === 'admin';
+    const isAdmin =
+      userRecord.customClaims && userRecord.customClaims.role === "admin";
 
     res.status(200).json({ isAdmin });
   } catch (error) {
     console.error("Error checking admin status:", error);
 
-    if (error.code === 'auth/user-not-found') {
+    if (error.code === "auth/user-not-found") {
       return res.status(404).json({ error: "User not found" });
     }
     res.status(500).json({ error: error.message });
   }
 };
-
-
 
 // Delete User
 exports.deleteUser = async (req, res) => {
@@ -104,7 +106,6 @@ exports.deleteUser = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 
 // Change User Role
 exports.changeUserRole = async (req, res) => {
@@ -142,7 +143,8 @@ exports.updateUser = async (req, res) => {
 
     // Only include fields that are present in the request body
     if (updateData.email) firebaseUpdates.email = updateData.email;
-    if (updateData.displayName) firebaseUpdates.displayName = updateData.displayName;
+    if (updateData.displayName)
+      firebaseUpdates.displayName = updateData.displayName;
 
     // Update user in Firebase if there are fields to update
     const updatedUser = await admin.auth().updateUser(uid, firebaseUpdates);

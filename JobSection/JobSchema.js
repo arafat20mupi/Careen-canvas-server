@@ -78,4 +78,4 @@ const jobSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Blog", jobSchema);
+module.exports = mongoose.model("Job", jobSchema);
