@@ -10,6 +10,7 @@ const PaymentsRoute = require('./Payment/PaymentRoute')
 const connectDB = require("./Config/dbConfig")
 const FromData = require("./FromData/formDataRoutes")
  const PDFRoute= require('./PDF/PdfRoute')
+ const gitRoute= require('./Gigs/gigRoute')
 require("dotenv").config();
 // Body parser middleware to parse JSON request bodies
 app.use(bodyParser.json());
@@ -42,6 +43,8 @@ app.use('/api' ,  FromData )
 app.use('/api', PaymentsRoute)
 //   Pdf
  app.use('/api',PDFRoute)
+ // Gigs
+ app.use('/api',gitRoute)
 
 // Server listening
 const PORT = process.env.PORT || 8000;
