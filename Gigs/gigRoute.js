@@ -10,6 +10,8 @@ const {
 
     approveGig
 } = require('./gigController');
+const { adminCheck, authMiddleware } = require('../Middelware/Middleware');
+
 
 const router = express.Router();
 const storage = multer.memoryStorage(); // Store files in memory
@@ -27,5 +29,5 @@ router.delete('/:projectId', deleteById);
 
 
 // Approve a gig by project ID
-router.patch('/:projectId/approve', approveGig); // Approve a gig
+router.patch('/:projectId/approve',authMiddleware,adminCheck, approveGig); // Approve a gig
 module.exports = router;

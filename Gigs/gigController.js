@@ -1,5 +1,5 @@
 const  Gig  = require('./gig')
-const  User  = require('../User/UserSchema')
+const  UserSchema  = require('../User/UserSchema')
 // Create a new gig
 const createGig = async (req, res) => {
     try {
@@ -147,11 +147,12 @@ const approveGig = async (req, res) => {
     try {
       const { projectId } = req.params;
       
+      // use jwt
       // Assuming you pass the user information with the request (e.g., from a JWT token)
-      const userId = req.userId; // Get the user ID from the request (ensure you set this earlier in your auth process)
+      const userId = req.userId.uid; // Get the user ID from the request (ensure you set this earlier in your auth process)
   
       // Find the user to check their role
-      const user = await User.findById(userId);
+      const user = await UserSchema.findById(userId);
   
       // Check if the user is an admin
       if (!user || user.role !== 'admin') {
