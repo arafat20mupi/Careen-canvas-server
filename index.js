@@ -10,8 +10,10 @@ const JobRoute = require('./JobSection/JobRoute')
 const PaymentsRoute = require('./Payment/PaymentRoute')
 const connectDB = require("./Config/dbConfig")
 const FromData = require("./FromData/formDataRoutes")
- const PDFRoute= require('./PDF/PdfRoute')
- const gitRoute= require('./Gigs/gigRoute')
+const PDFRoute = require('./PDF/PdfRoute')
+const gitRoute = require('./Gigs/gigRoute')
+const ApplyJobRoute = require('./ApplyNow/ApplyRoute')
+
 require("dotenv").config();
 // Body parser middleware to parse JSON request bodies
 app.use(bodyParser.json());
@@ -29,24 +31,27 @@ app.get("/", (req, res) => {
 });
 
 
-//  Blogs
+//  Jobs Route
 app.use("/api", JobRoute)
-
-
 
 // user route
 app.use("/api/users", UserRoute)
 
 // FromData
-app.use('/api' ,  FromData )
+app.use('/api', FromData)
 
 //  payment  related api
 app.use('/api', PaymentsRoute)
+
 //   Pdf
- app.use('/api',PDFRoute)
- // Gigs
- app.use('/api',gitRoute)
- app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/api', PDFRoute)
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Gigs
+app.use('/api', gitRoute)
+
+// Job Apply Route
+app.use('/api', ApplyJobRoute)
 
 // Server listening
 const PORT = process.env.PORT || 8000;

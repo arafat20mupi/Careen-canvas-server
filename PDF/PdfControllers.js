@@ -23,9 +23,9 @@ const postPdf = async (req, res) => {
 
 const getPdf = async (req, res) => {
   try {
-    const pdf = await PDF.find();  
+    const pdf = await PDF.find();
     res.status(200).json({ message: 'PDFs retrieved successfully', data: pdf });
-    } catch (error) {
+  } catch (error) {
     res.status(500).json({ message: 'Error retrieving PDFs', error: error.message });
   }
 }
@@ -55,7 +55,7 @@ const giveFeedback = async (req, res) => {
     if (rating < 1 || rating > 5) {
       return res.status(400).json({ message: 'Rating must be between 1 and 5' });
     }
-console.log(req.body); 
+    console.log(req.body);
     // Find the PDF by ID and update feedback
     const updatedPdf = await PDF.findByIdAndUpdate(
       pdfId,
