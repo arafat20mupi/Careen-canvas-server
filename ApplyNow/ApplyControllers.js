@@ -1,5 +1,3 @@
-const JobSchema = require("../JobSection/JobSchema");
-const UserSchema = require("../User/UserSchema");
 const ApplySchema = require("./ApplySchema");
 
 
@@ -9,42 +7,29 @@ const ApplySchema = require("./ApplySchema");
 const applyForJob = async (req, res) => {
   try {
     // Extract data from the request body
-    const { userId, jobId, name, email, } = req.body;
+    const { userId, name, email, phone, details, companyName, jobTitle } = req.body;
 
     // Basic validation (Ensure required fields are present)
-    if (!name || !email || !phone || !jobId) {
+    if (!name || !email || !phone || !details || !companyName || !jobTitle) {
       return res.status(400).json({ message: 'All required fields must be provided.' });
     }
 
-    // Optional: Check if the job exists
-    const job = await JobSchema.findById(jobId);
-    if (!job) {
-      return res.status(404).json({ message: 'Job not found.' });
-    }
-
-    // Optional: Check if the user exists (if logged in user)
-    const user = await UserSchema.findById(userId);
-    if (userId && !user) {
-      return res.status(404).json({ message: 'User not found.' });
-    }
 
     // Create a new application instance
     const newApplication = new ApplySchema({
-      userId: userId || null, // If user is logged in, use their userId
-      jobId: jobId,
+      userId: userId,
       name: name,
       email: email,
+      phone: phone,
+      details: details,
+      jobTitle: jobTitle,
+      companyName: companyName,
       applicationDate: new Date(),
-      status: 'pending' // Default status when application is submitted
+      status: 'pending'
     });
 
-    // Save the application to the database
     await newApplication.save();
-
-    // Optional: Send confirmation email (Nodemailer can be used here)
-    // Example: await sendConfirmationEmail(email, job.title);
-
-    // Send success response
+    console.log(newApplication);    // Send success response
     return res.status(201).json({ message: 'Application submitted successfully.', application: newApplication });
 
   } catch (error) {
@@ -53,4 +38,26 @@ const applyForJob = async (req, res) => {
   }
 };
 
-module.exports = { applyForJob };
+// Job Get 
+const getJobApplied = async (req, res) => {
+  try {
+    // Fetching all jobs from the database
+    const jobs = await ApplySchema.find();
+    console.log(jobs);
+
+    // Return the jobs with a 200 OK status
+    return res.status(200).json(jobs);
+  } catch (error) {
+    console.error('Error retrieving jobs:', error);
+
+    // Return a 500 status with an error message
+    return res.status(500).json({ message: 'Failed to retrieve jobs. Please try again later.' });
+  }
+};
+
+//  Job Application Put
+const applicationPut = async (req, res) =>{
+
+}
+
+module.exports = { applyForJob, getJobApplied ,applicationPut };
