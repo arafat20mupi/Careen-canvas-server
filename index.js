@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 // Routes
 const UserRoute = require('./User/UserRoute')
@@ -45,6 +46,7 @@ app.use('/api', PaymentsRoute)
  app.use('/api',PDFRoute)
  // Gigs
  app.use('/api',gitRoute)
+ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Server listening
 const PORT = process.env.PORT || 8000;
