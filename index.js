@@ -20,8 +20,8 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 connectDB()
 app.use(cors({
-  // origin: ['http://localhost:5173', 'http://localhost:5174']
-  origin: '*',
+  origin: ['http://localhost:5173', 'http://localhost:5174','https://calm-platypus-028451.netlify.app/']
+  // origin: '*',
 }));
 app.use(express.json());
 
