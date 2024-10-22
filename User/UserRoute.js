@@ -1,7 +1,7 @@
 // UserRoutes.js
 const express = require("express");
 const { register, login, getAllUsers, deleteUser, changeUserRole, checkAdmin, updateUser } = require("./UserController");
-const { authMiddleware ,adminCheck} = require("../Middelware/Middleware");
+const { authMiddleware ,adminCheck} = require("../Middleware/Middleware");
 
 const route = express.Router();
 

@@ -2,7 +2,7 @@ const express = require('express');
 
 const multer = require('multer');
 const { postPdf,getPdf, getPdfById, giveFeedback, getFeedback } = require('./PdfControllers');
-const { authMiddleware } = require('../Middelware/Middleware');
+const { authMiddleware } = require('../Middleware/Middleware');
 const router = express.Router();
 
 // Set up multer storage configuration
