@@ -8,7 +8,9 @@ const {
     getGigByProjectID,
     getAllGigsByFilter,
 
-    approveGig
+    approveGig,
+    addReviewToGig,
+    getAllReviewsForGig
 } = require('./gigController');
 const { adminCheck, authMiddleware } = require('../Middelware/Middleware');
 
@@ -27,6 +29,9 @@ router.post('/', upload.array('projectImages'), createGig);
 router.put('/:projectId', upload.array('projectImages'), updateByProjectId);
 router.delete('/:projectId', deleteById);
 
+//review section
+router.post('/gigs/:gigId/reviews', addReviewToGig);
+router.get('/gigs/:gigId/reviews', getAllReviewsForGig);
 
 // Approve a gig by project ID
 router.patch('/:projectId/approve',authMiddleware,adminCheck, approveGig); // Approve a gig
