@@ -12,7 +12,7 @@ const {
     addReviewToGig,
     getAllReviewsForGig
 } = require('./gigController');
-const { adminCheck, authMiddleware } = require('../Middelware/Middleware');
+const { authMiddleware, adminCheck } = require('../Middleware/Middleware');
 
 
 const router = express.Router();
@@ -34,5 +34,5 @@ router.post('/gigs/:gigId/reviews', addReviewToGig);
 router.get('/gigs/:gigId/reviews', getAllReviewsForGig);
 
 // Approve a gig by project ID
-router.patch('/:projectId/approve',authMiddleware,adminCheck, approveGig); // Approve a gig
+router.patch('/:projectId/approve',authMiddleware ,adminCheck, approveGig); // Approve a gig
 module.exports = router;
