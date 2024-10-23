@@ -80,19 +80,41 @@ const giveFeedback = async (req, res) => {
   }
 };
 
-// Get feedback for a specific PDF
-const getFeedback = async (req, res) => {
+
+
+
+// Get all PDFs by user email
+const getPdfByEmail = async (req, res) => {
+  const email = req.params.email; // Get email from URL parameter
   try {
-    const pdfId = req.params.id;  // Get the PDF ID from the URL parameters
+    // Find all PDFs associated with the provided email
+    const pdfs = await PDF.find({ userEmail: email });
 
-    // Find the PDF by ID and select the feedback
-    const pdf = await PDF.findById(pdfId).select('feedback');
-
-    if (!pdf) {
-      return res.status(404).json({ message: 'PDF not found' });
+    if (pdfs.length === 0) {
+      return res.status(404).json({ message: 'No PDFs found for this email' });
     }
 
-    res.status(200).json({ message: 'Feedback retrieved successfully', data: pdf.feedback });
+    // Send the first PDF file found for the user (adjust to loop through if multiple PDFs should be sent)
+    const pdfFilePath = path.join(__dirname, '..', pdfs[0].pdf); // Sending the first one for simplicity
+    res.sendFile(pdfFilePath); // This sends the first PDF file
+
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving PDFs', error: error.message });
+  }
+};
+
+const getFeedback = async (req, res) => {
+  try {
+    const pdfEmail = req.params.email; 
+
+    // Find all feedback entries for the provided email
+    const feedbacks = await PDF.find({ userEmail: pdfEmail });
+
+    if (feedbacks.length === 0) {
+      return res.status(404).json({ message: 'No feedback found for this email' });
+    }
+
+    res.status(200).json({ message: 'Feedback retrieved successfully', data: feedbacks });
   } catch (error) {
     res.status(500).json({ message: 'Error retrieving feedback', error: error.message });
   }
@@ -103,5 +125,6 @@ module.exports = {
   getPdf,
   getPdfById,
   giveFeedback,
-  getFeedback
+  getFeedback,
+  getPdfByEmail
 };
