@@ -6,11 +6,11 @@ const gigSchema = new mongoose.Schema({
     required: true,
   },
   userImage: {
-    type: Buffer, // Store the user's image as a buffer
+    type: String, // Store URL from ImageBB
     required: true,
   },
   projectImages: [{
-    type: Buffer, // Store multiple project images as buffers
+    type: String, // Store URLs from ImageBB
     required: true,
   }],
   userName: {
@@ -18,8 +18,8 @@ const gigSchema = new mongoose.Schema({
     required: true,
   },
   userId: {
-    type: String, // Reference to the user
-    ref: 'User', // Assuming you have a User model
+    type: String,
+    ref: 'User',
     required: true,
   },
   projectDetail: {
@@ -29,25 +29,25 @@ const gigSchema = new mongoose.Schema({
   skills: [{ type: String }],
   date: {
     type: Date,
-    default: Date.now, // Automatically set the current date
+    default: Date.now,
   },
   isApproved: {
     type: Boolean,
-    default: false, // Default is not approved
+    default: false,
   },
   rating: {
     type: Number,
     min: 0,
     max: 5,
-    default: 0, 
+    default: 0,
   },
   reviews: [{
     userId: {
-      type: String, 
+      type: String,
       required: true,
     },
     comment: {
-      type: String, 
+      type: String,
     },
     date: {
       type: Date,
@@ -56,11 +56,11 @@ const gigSchema = new mongoose.Schema({
   }],
   contactInfo: {
     email: {
-      type: String, // Email for potential clients to contact the user
+      type: String,
       required: true,
     },
     phone: {
-      type: String, // Phone number for potential clients to contact the user
+      type: String,
     },
   },
   faq: [{
@@ -74,7 +74,7 @@ const gigSchema = new mongoose.Schema({
     },
   }],
 }, {
-  timestamps: true, // Automatically add createdAt and updatedAt fields
+  timestamps: true,
 });
 
 const Gig = mongoose.model('Gig', gigSchema);

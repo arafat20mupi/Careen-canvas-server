@@ -10,6 +10,7 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASSWORD,
   },
 });
+// console.log(user);
 
 const sendCongratulatoryEmail = (to, name) => {
   const mailOptions = {
