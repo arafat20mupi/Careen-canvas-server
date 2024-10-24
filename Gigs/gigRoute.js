@@ -14,7 +14,7 @@ const { authMiddleware, adminCheck } = require('../Middleware/Middleware');
 const router = express.Router();
 
 // Routes
-router.get('/', getAllGigsByFilter);
+router.get('/getByFilter', getAllGigsByFilter);
 router.get('/gig', getGigByProjectID);
 router.post('/gigs', createGig); // Creating a gig
 router.put('/:projectId', updateByProjectId); // Updating a gig
