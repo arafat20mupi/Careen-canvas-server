@@ -53,7 +53,7 @@ exports.getJobsByFilterSearch = async (req, res) => {
     experience,
   } = req.query;
 
-  console.log(req.query);
+  // console.log(req.query);
 
   // Build filter object for MongoDB query
   const filter = {};
