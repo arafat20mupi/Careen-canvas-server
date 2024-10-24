@@ -189,3 +189,78 @@ exports.deleteJobs = async (req, res) => {
     });
   }
 };
+
+exports.saveJobs = async (req, res) => {
+  try {
+    const id = req.params.id;
+    console.log(id); // Log the userId for debugging
+
+    // Check if the id (userId) is present
+    if (!id) {
+      return res.status(400).json({ success: false, message: 'Invalid job ID' });
+    }
+
+    // Use findOneAndUpdate to find the job by userId instead of _id
+    const job = await JobSchema.findOneAndUpdate({ _id : id }, req.body, {
+      new: true,
+      upsert: true, // This will create a new document if it doesn't exist
+    });
+
+    // Check if the job was found and updated or created
+    if (!job) {
+      return res.status(404).json({ success: false, message: 'Job not found or could not be saved' });
+    }
+    // Send a success response
+    res.status(200).json({
+      success: true,
+      message: "Job saved successfully",
+      job,
+    });
+  } catch (error) {
+
+    // Send a 500 error response
+    res.status(500).json({
+      success: false,
+      message: "Failed to save job listing",
+      error: error.message,
+    });
+  }
+};
+
+exports.getSaveJobsById = async (req, res) => {
+  try {
+    const email = req.params.email;
+
+    // Ensure the email is present
+    if (!email) {
+      return res.status(400).json({ success: false, message: 'Invalid user email' });
+    }
+
+    // Find all jobs by user email
+    const jobs = await JobSchema.find({ email: email }); // Assuming the schema stores the user's email as 'userEmail'
+
+    if (!jobs || jobs.length === 0) {
+      return res.status(404).json({ success: false, message: 'No saved jobs found' });
+    }
+
+    // Send a success response
+    res.status(200).json({
+      success: true,
+      message: "Jobs retrieved successfully",
+      jobs,
+    });
+  } catch (error) {
+    // Log the error for debugging
+    console.error("Error retrieving jobs:", error);
+
+    // Send a 500 error response
+    res.status(500).json({
+      success: false,
+      message: "Failed to retrieve saved jobs",
+      error: error.message,
+    });
+  }
+};
+
+
+

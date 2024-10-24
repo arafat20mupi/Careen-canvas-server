@@ -56,8 +56,28 @@ const getJobApplied = async (req, res) => {
 };
 
 //  Job Application Put
-const applicationPut = async (req, res) =>{
-
+const applicationPut = async (req, res) => {
+  try {
+    const job = await ApplySchema.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!job) {
+      return res.status(404).json({
+        success: false,
+        message: "Job listing not found",
+      });
+    }
+    res.status(200).json({
+      message: "Applied job updated successfully!",
+      job,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Failed to update job listing",
+      error: error.message,
+    });
+  }
 }
 
-module.exports = { applyForJob, getJobApplied ,applicationPut };
+module.exports = { applyForJob, getJobApplied, applicationPut };
