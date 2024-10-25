@@ -52,7 +52,7 @@ GET  /api/formdata/:userId
 
 ````
 
-### Jobs asBlog
+## Jobs asBlog
 
 ```
 GET /api/getJobsByFlitterSearch
@@ -64,16 +64,18 @@ PUT api/updateJobs/:id
 DELETE /api/deleteJobs/:id
 
 ````
-###  PaymentGetway byStripe
+##  PaymentGetway byStripe
 
 ````
 POST /api/createPaymentIntent
 
 POST /api/payments
 
-```
 
-###  GiGs
+`````
+
+
+##  GiGs
 
 ```
 POST   /api/gigs
@@ -86,7 +88,7 @@ DELETE /api/:projectId
 
 ```
 
-###Gigs Review
+## Gigs Review
 ```
 POST /api/gigs/:gigId/reviews
 
