@@ -38,22 +38,28 @@ exports.createPaymentIntent = async (req, res) => {
 
 exports.payments = async (req, res) => {
   try {
-    const { amount, paymentIntentId, email, status } = req.body;
+    const { amount, paymentIntentId, email, status, displayName, userId } = req.body;
 
     // Validate the incoming payment data
-    if (!amount || !paymentIntentId || !email || !status) {
+    if (!amount || !paymentIntentId || !email || !status || !displayName || !userId) {
       return res.status(400).json({ message: "Missing required payment fields." });
     }
 
     // Find and update the existing payment or create a new one
     const payment = await Payment.findOneAndUpdate(
       { email },
-      { paymentIntentId, amount, status },
+      {
+        paymentIntentId,
+        amount: Math.round(amount / 100),
+        status,
+        displayName,
+        userId
+      },
       { new: true, upsert: true } // upsert creates a new document if no document matches the query
     );
 
     console.log('Payment saved/updated:', payment);
-    
+
     return res.status(201).send(payment);
   } catch (error) {
     console.error("Error creating/updating payment:", error);
@@ -63,3 +69,32 @@ exports.payments = async (req, res) => {
     });
   }
 };
+
+exports.getPayment = async (req, res) => {
+  try {
+    const payment = await Payment.find();
+    return res.status(200).send(payment);
+  }
+  catch (error) {
+    console.error("Error fetching payments:", error);
+    return res.status(500).json({
+      message: "Server error during fetching payments",
+      error: error.message,
+    });
+  }
+}
+
+exports.getPaymentByUserId = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const payment = await Payment.find( userId );
+    return res.status(200).send(payment);
+  }
+  catch (error) {
+    console.error("Error fetching payments by user ID:", error);
+    return res.status(500).json({
+      message: "Server error during fetching payments by user ID",
+      error: error.message,
+    });
+  }
+}
