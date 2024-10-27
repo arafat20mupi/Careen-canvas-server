@@ -20,6 +20,14 @@ const PaymentSchema = new mongoose.Schema(
       required: true,
       enum: ["PENDING", "SUCCEEDED", "FAILED"],
     },
+    userId: {
+      type: String,
+      required: true,
+    },
+    displayName :{
+      type: String,
+      required: true,
+    }
   },
   {
     timestamps: true,
