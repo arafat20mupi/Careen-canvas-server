@@ -26,7 +26,7 @@ admin.initializeApp({
 // Authentication Middleware
 const authMiddleware = async (req, res, next) => {
   const token = req.headers.authorization?.split('Bearer ')[1];
-
+      // console.log(token);
   if (!token) {
     return res.status(401).json({ message: 'Unauthorized - No token provided' });
   }
@@ -37,7 +37,7 @@ const authMiddleware = async (req, res, next) => {
       uid: decodedToken.uid,
       email: decodedToken.email,
       role: decodedToken.role || 'user', // Assuming custom claims are used for roles
-    };
+    };  
     next();
   } catch (error) {
     if (error.code === 'auth/id-token-expired') {

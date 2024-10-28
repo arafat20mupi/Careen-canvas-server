@@ -19,7 +19,7 @@ admin pass : Arafat@
 ```
 ## Features
 
--.Customizable Resume Templates
+- Customizable Resume Templates
 - Drag and Drop Resume Details
 - Newsletters: Subscription options for daily or weekly news summaries .
 - Download & Export Resume
