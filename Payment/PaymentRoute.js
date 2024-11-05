@@ -8,7 +8,7 @@ const route = express.Router();
 route.post("/createPaymentIntent", createPaymentIntent);
 // Define the POST route for creating a payment
 route.post("/payments",authMiddleware,debounceMiddleware, payments);
-route.get("PremiumAllUser", getPayment);
-route.get("PremiumUser", getPaymentByUserId);
+route.get("/PremiumAllUser", getPayment);
+route.get("/PremiumUser", getPaymentByUserId);
 
 module.exports = route;
