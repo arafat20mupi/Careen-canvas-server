@@ -15,6 +15,7 @@ const gitRoute = require('./Gigs/gigRoute')
 const ApplyJobRoute = require('./ApplyNow/ApplyRoute')
 
 require("dotenv").config();
+
 // Body parser middleware to parse JSON request bodies
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
